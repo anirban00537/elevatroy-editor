@@ -8,7 +8,6 @@ import {
 } from "@/hooks/useScreenshotEditor";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import EditorNavbar from "@/components/navbar/editorNav";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Page = () => {
@@ -42,14 +41,12 @@ const Page = () => {
 
   return (
     <div className="bg-dark-950">
-      <EditorNavbar
-        handleExport={handleExport}
-        handleCopyImageToClipboard={handleCopyImageToClipboard}
-      />
+   
       <div className="flex flex-col md:flex-row items-start">
         <UnifiedSidebar
           handleFileInputChange={handleFileInputChange}
           handleExport={handleExport}
+          handleCopyImageToClipboard={handleCopyImageToClipboard}
           image={image}
         />
 

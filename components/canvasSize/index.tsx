@@ -1,93 +1,79 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"; // Import the custom popover components
+} from "@/components/ui/popover";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCanvasTexts,
-  setHeight,
-  setScale,
-  setWidth,
-} from "@/store/slice/editor.slice";
+import { setHeight, setWidth } from "@/store/slice/editor.slice";
 import { RootState } from "@/store";
-import { CheckIcon, ChevronDownIcon } from "lucide-react";
+import { ChevronDown, Layout } from "lucide-react";
 import { socialMediaPostSizes } from "@/helpers/core-constants";
 import clsx from "clsx";
 
 const CanvasSize = () => {
-  const { image } = useSelector((state: RootState) => state.editor);
   const dispatch = useDispatch();
-  const [selectedSize, setSelectedSize] = React.useState(
-    socialMediaPostSizes[0]
-  );
+  const [selectedSize, setSelectedSize] = React.useState(socialMediaPostSizes[0]);
 
-  const handleCanvasSizeChange = (size: {
-    width: number;
-    height: number;
-    title: string; // Change type to title
-  }) => {
-    const selectedSize = socialMediaPostSizes.find(
-      (s) => s.title === size.title
-    );
-
-    if (selectedSize) {
-      dispatch(setWidth(selectedSize.width));
-      dispatch(setHeight(selectedSize.height));
-      setSelectedSize(selectedSize);
-    }
+  const handleCanvasSizeChange = (size: typeof socialMediaPostSizes[0]) => {
+    dispatch(setWidth(size.width));
+    dispatch(setHeight(size.height));
+    setSelectedSize(size);
   };
 
   return (
-    <div className="relative  rounded-xl border-gray-800 w-full z-50">
-      <Popover>
-        <PopoverTrigger>
-          <button className="flex items-center justify-start py-2 px-4 w-full z-40 backdrop-blur-md bg-transparent bg-opacity-80 text-white">
+    <Popover>
+      <PopoverTrigger asChild>
+        <button className="flex items-center justify-between w-full p-3 bg-dark-200 
+          hover:bg-dark-300 rounded-md text-zinc-400 transition-colors border border-dark-border">
+          <div className="flex items-center gap-2">
             <img
               src={selectedSize.icon}
-              alt={`${selectedSize.title} Icon`}
-              className="w-3 h-3 ml-2"
+              alt={selectedSize.platform}
+              className="w-4 h-4"
             />
-            <h1 className="text-xs ml-2 hidden md:block">
-              {selectedSize.title} ({selectedSize.width} x {selectedSize.height}
-              )
-            </h1>
-            <ChevronDownIcon className="w-3 h-3 ml-2" />
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="bg-deep-slate-900 w-[400px] md:w-[500px] bg-opacity-80 backdrop-blur-lg border border-gray-800 rounded-md">
-          <div className="overflow-hidden ring-1 ring-black ring-opacity-5">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 p-2">
-              {socialMediaPostSizes.map((size) => (
+            <span className="text-sm">{selectedSize.title}</span>
+          </div>
+          <ChevronDown size={14} />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[300px] p-2 bg-dark-100 border border-dark-border">
+        <div className="grid gap-2">
+          {Object.entries(
+            socialMediaPostSizes.reduce((acc, size) => {
+              if (!acc[size.platform]) acc[size.platform] = [];
+              acc[size.platform].push(size);
+              return acc;
+            }, {} as Record<string, typeof socialMediaPostSizes>)
+          ).map(([platform, sizes]) => (
+            <div key={platform} className="space-y-1">
+              <div className="text-xs font-medium text-zinc-500 px-2">{platform}</div>
+              {sizes.map((size) => (
                 <button
-                  key={size.title} // Change key to title
+                  key={size.title}
                   onClick={() => handleCanvasSizeChange(size)}
                   className={clsx(
-                    "flex flex-col items-center justify-center py-2 px-2 text-[10px] text-gray-300 cursor-pointer hover:border-slate-800 focus:outline-none border border-slate-700 rounded-md backdrop-blur-md bg-slate-800 bg-opacity-20",
-                    {
-                      "font-bold": selectedSize.title === size.title,
-                    }
+                    "flex items-center w-full p-2 rounded-md text-sm",
+                    "hover:bg-dark-300 transition-colors",
+                    selectedSize.title === size.title
+                      ? "bg-dark-300 text-zinc-200"
+                      : "text-zinc-400"
                   )}
                 >
-                  <div className="flex items-center justify-start">
-                    <img
-                      src={size.icon}
-                      alt={`${size.title} Icon`}
-                      className="w-3 h-3 mr-1"
-                    />
+                  <img src={size.icon} alt={size.platform} className="w-4 h-4 mr-2" />
+                  <div className="flex flex-col items-start">
                     <span>{size.title}</span>
+                    <span className="text-xs text-zinc-500">
+                      {size.width} × {size.height}
+                    </span>
                   </div>
-                  <span className="">
-                    ({size.width} x {size.height})
-                  </span>
                 </button>
               ))}
             </div>
-          </div>
-        </PopoverContent>
-      </Popover>
-    </div>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 

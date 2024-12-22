@@ -122,42 +122,39 @@ export const useExport = () => {
     },
     [containerRef]
   );
-  const handleCopyImageToClipboard = useCallback(
-    (width: number, height: number) => {
-      if (containerRef.current === null) {
-        return;
-      }
+  const handleCopyImageToClipboard = useCallback(() => {
+    if (containerRef.current === null) {
+      return;
+    }
 
-      toPng(containerRef.current, { cacheBust: true })
-        .then((dataUrl: any) => {
-          // Convert data URL to blob
-          return fetch(dataUrl)
-            .then((response) => response.blob())
-            .then((blob) => {
-              // Copy blob to clipboard
-              return navigator.clipboard.write([
-                new ClipboardItem({ "image/png": blob }),
-              ]);
-            });
-        })
-        .then(() => {
-          console.log("Image copied to clipboard!");
-          toast("Image copied to clipboard!", {
-            icon: "🎉",
-            style: {
-              borderRadius: "10px",
-              background: "#333",
-              color: "#fff",
-            },
+    toPng(containerRef.current, { cacheBust: true })
+      .then((dataUrl: any) => {
+        // Convert data URL to blob
+        return fetch(dataUrl)
+          .then((response) => response.blob())
+          .then((blob) => {
+            // Copy blob to clipboard
+            return navigator.clipboard.write([
+              new ClipboardItem({ "image/png": blob }),
+            ]);
           });
-        })
-        .catch((error) => {
-          console.error("Failed to copy image to clipboard:", error);
-          toast.error("Failed to copy image to clipboard");
+      })
+      .then(() => {
+        console.log("Image copied to clipboard!");
+        toast("Image copied to clipboard!", {
+          icon: "🎉",
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
         });
-    },
-    [containerRef]
-  );
+      })
+      .catch((error) => {
+        console.error("Failed to copy image to clipboard:", error);
+        toast.error("Failed to copy image to clipboard");
+      });
+  }, [containerRef]);
 
   return {
     handleExport,

@@ -1,25 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useColors } from "@/hooks/useScreenshotEditor";
-import { useImageSection } from "@/hooks/useScreenshotEditor";
-import { Folder, Plus, ChevronRight } from "lucide-react";
+import { useColors, useImageSection } from "@/hooks/useScreenshotEditor";
+import {
+  Folder,
+  Plus,
+  ChevronRight,
+  Download,
+  Copy,
+  ArrowRight,
+  Settings,
+  Image,
+  Sliders,
+  Layout,
+} from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import CustomSlider from "@/components/slider/customSlider";
-import ElementsSection from "./elementsSection";
 import BackgroundSection from "./BackgroundSection";
-import FramePicker from "@/components/LeftSidebarSection/framePicker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setGradientDirection } from "@/store/slice/editor.slice";
+import CanvasInputSize from "../canvasSize/canvasInputSize";
+import CanvasSize from "../canvasSize";
+import Link from "next/link";
+import type { RootState } from "@/store";
 
 interface UnifiedSidebarProps {
   handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleExport: (width: number, height: number) => void;
+  handleCopyImageToClipboard: () => void;
   image: any;
 }
 
 const UnifiedSidebar: React.FC<UnifiedSidebarProps> = ({
   handleFileInputChange,
   handleExport,
+  handleCopyImageToClipboard,
   image,
 }) => {
   const {
@@ -56,12 +70,65 @@ const UnifiedSidebar: React.FC<UnifiedSidebarProps> = ({
     dispatch(setGradientDirection(direction));
   };
 
+  const { width, height } = useSelector((state: RootState) => state.editor);
+
   return (
-    <aside className="fixed left-0 top-[65px] bottom-0 w-[320px] bg-[#0D0D12] overflow-y-auto">
-      <div className="p-5 space-y-6">
-        {/* Adjustments Section */}
+    <aside className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] overflow-y-auto">
+      <div className="p-5 space-y-6 pb-32">
+        {/* Image Section - First */}
         <section>
-          <h3 className="text-zinc-400 text-sm font-medium mb-4">Adjustments</h3>
+          <h3 className="text-zinc-400 text-sm font-medium mb-4 flex items-center gap-2">
+            <Image size={16} />
+            Image
+          </h3>
+          <label
+            htmlFor="fileInput"
+            className="flex items-center justify-center w-full py-2.5 px-4 
+              bg-dark-200 hover:bg-dark-300 rounded-md cursor-pointer 
+              text-xs text-zinc-400 transition-colors"
+          >
+            Upload Image
+          </label>
+          <div className="grid grid-cols-5 gap-2 mt-4">
+            <button
+              className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
+              flex items-center justify-center text-zinc-400"
+            >
+              T
+            </button>
+            <button
+              className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
+              flex items-center justify-center text-zinc-400"
+            >
+              ↗
+            </button>
+            <button
+              className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
+              flex items-center justify-center text-zinc-400"
+            >
+              ○
+            </button>
+            <button
+              className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
+              flex items-center justify-center text-zinc-400"
+            >
+              ↱
+            </button>
+            <button
+              className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
+              flex items-center justify-center text-zinc-400"
+            >
+              □
+            </button>
+          </div>
+        </section>
+
+        {/* Adjustments Section - Second */}
+        <section>
+          <h3 className="text-zinc-400 text-sm font-medium mb-4 flex items-center gap-2">
+            <Sliders size={16} />
+            Adjustments
+          </h3>
           <div className="space-y-5">
             <CustomSlider
               label="Image Radius"
@@ -106,67 +173,50 @@ const UnifiedSidebar: React.FC<UnifiedSidebarProps> = ({
           </div>
         </section>
 
-        {/* Settings Section */}
+        {/* Settings Section - Third */}
         <section>
-          <h3 className="text-zinc-400 text-sm font-medium mb-4">Settings</h3>
-          <div className="flex items-center justify-between space-x-4">
-            <div className="flex items-center justify-between flex-1">
-              <span className="text-xs text-zinc-400">Watermark</span>
+          <h3 className="text-zinc-400 text-sm font-medium mb-4 flex items-center gap-2">
+            <Settings size={16} />
+            Settings
+          </h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 bg-dark-200 rounded-md">
+              <span className="text-sm text-zinc-400">Watermark</span>
               <Switch
                 checked={waterMark}
                 onCheckedChange={() => setWaterMarkState(!waterMark)}
-                className="data-[state=checked]:bg-zinc-200 data-[state=unchecked]:bg-zinc-700"
+                className="data-[state=checked]:bg-accent data-[state=unchecked]:bg-dark-400"
               />
             </div>
-            <div className="flex items-center justify-between flex-1">
-              <span className="text-xs text-zinc-400">Grid Overlay</span>
+            <div className="flex items-center justify-between p-3 bg-dark-200 rounded-md">
+              <span className="text-sm text-zinc-400">Grid Overlay</span>
               <Switch
                 checked={gridOverlay}
                 onCheckedChange={() => setGridOverlayState(!gridOverlay)}
-                className="data-[state=checked]:bg-zinc-200 data-[state=unchecked]:bg-zinc-700"
+                className="data-[state=checked]:bg-accent data-[state=unchecked]:bg-dark-400"
               />
             </div>
           </div>
         </section>
 
-        {/* Image Section */}
+        {/* Canvas Size Section - Fourth */}
         <section>
-          <h3 className="text-zinc-400 text-sm font-medium mb-4">Image</h3>
-          <label
-            htmlFor="fileInput"
-            className="flex items-center justify-center w-full py-2.5 px-4 
-              bg-dark-200 hover:bg-dark-300 rounded-md cursor-pointer 
-              text-xs text-zinc-400 transition-colors"
-          >
-            Upload Image
-          </label>
-          <div className="grid grid-cols-5 gap-2 mt-4">
-            <button className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
-              flex items-center justify-center text-zinc-400">
-              T
-            </button>
-            <button className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
-              flex items-center justify-center text-zinc-400">
-              ↗
-            </button>
-            <button className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
-              flex items-center justify-center text-zinc-400">
-              ○
-            </button>
-            <button className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
-              flex items-center justify-center text-zinc-400">
-              ↱
-            </button>
-            <button className="aspect-square rounded bg-dark-200 hover:bg-dark-300 
-              flex items-center justify-center text-zinc-400">
-              □
-            </button>
+          <h3 className="text-zinc-400 text-sm font-medium mb-4 flex items-center gap-2">
+            <Layout size={16} />
+            Canvas Size
+          </h3>
+          <div className="space-y-3">
+            <CanvasInputSize />
+            <CanvasSize />
           </div>
         </section>
 
-        {/* Background Section */}
+        {/* Background Section - Last */}
         <section>
-          <h3 className="text-zinc-400 text-sm font-medium mb-4">Background</h3>
+          <h3 className="text-zinc-400 text-sm font-medium mb-4 flex items-center gap-2">
+            <Layout size={16} />
+            Background
+          </h3>
           <BackgroundSection
             gradientColors={gradientColors}
             handleRemoveColor={handleRemoveColor}
@@ -188,8 +238,32 @@ const UnifiedSidebar: React.FC<UnifiedSidebarProps> = ({
           className="hidden"
         />
       </div>
+
+      {/* Fixed bottom buttons */}
+      <div className="fixed bottom-0 left-0 w-[320px] p-4 bg-[#0D0D12] border-t border-dark-border">
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleExport(width, height)}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
+              bg-accent hover:bg-accent-hover rounded-md cursor-pointer 
+              text-sm text-white transition-colors"
+          >
+            <Download size={16} />
+            Download
+          </button>
+          <button
+            onClick={handleCopyImageToClipboard}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
+              bg-dark-200 hover:bg-dark-300 rounded-md cursor-pointer 
+              text-sm text-zinc-400 transition-colors border border-dark-border"
+          >
+            <Copy size={16} />
+            Copy
+          </button>
+        </div>
+      </div>
     </aside>
   );
 };
 
-export default UnifiedSidebar; 
+export default UnifiedSidebar;
