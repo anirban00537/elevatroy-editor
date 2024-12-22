@@ -2,7 +2,12 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useColors, useImageSection } from "@/hooks/useScreenshotEditor";
 import {
-  Download, Copy, Settings, Image, Sliders, Layout,
+  Download,
+  Copy,
+  Settings,
+  Image,
+  Sliders,
+  Layout,
   Palette, // for background
   Move,
   Github,
@@ -70,7 +75,10 @@ const sections = [
             onChange={handleFileInputChange}
             className="hidden"
           />
-          <Image size={16} className="mr-2 text-zinc-400 group-hover:text-zinc-300" />
+          <Image
+            size={16}
+            className="mr-2 text-zinc-400 group-hover:text-zinc-300"
+          />
           Upload Image
         </label>
 
@@ -85,7 +93,7 @@ const sections = [
           </div>
         )}
       </div>
-    )
+    ),
   },
   {
     id: "controls",
@@ -101,49 +109,44 @@ const sections = [
         handleTranslateX={props.handleTranslateX || (() => {})}
         handleTranslateY={props.handleTranslateY || (() => {})}
       />
-    )
+    ),
   },
   {
     id: "adjustments",
     title: "Adjustments",
     icon: Sliders,
-    Component: ({ sliders }: any) => (
-      <div className="space-y-5">
-        {sliders}
-      </div>
-    )
+    Component: ({ sliders }: any) => <div className="space-y-5">{sliders}</div>,
   },
   {
     id: "background",
     title: "Background",
     icon: Palette,
-    Component: ({ ...props }: SectionProps) => (
-      <BackgroundSection {...props} />
-    )
+    Component: ({ ...props }: SectionProps) => <BackgroundSection {...props} />,
   },
   {
     id: "settings",
     title: "Settings",
     icon: Settings,
     Component: ({ switches }: any) => (
-      <div className="space-y-3">
-        {switches}
-      </div>
-    )
+      <div className="space-y-3">{switches}</div>
+    ),
   },
   {
     id: "canvas",
     title: "Canvas Size",
     icon: Layout,
     Component: ({ canvasInputs }: any) => (
-      <div className="space-y-3">
-        {canvasInputs}
-      </div>
-    )
-  }
+      <div className="space-y-3">{canvasInputs}</div>
+    ),
+  },
 ];
 
-const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageToClipboard, image }: UnifiedSidebarProps) => {
+const UnifiedSidebar = ({
+  handleFileInputChange,
+  handleExport,
+  handleCopyImageToClipboard,
+  image,
+}: UnifiedSidebarProps) => {
   const {
     imageRadius,
     canvasRadius,
@@ -151,8 +154,6 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
     handleCanvasRadiusChange,
     setGridOverlayState,
     gridOverlay,
-    setWaterMarkState,
-    waterMark,
     handleShadowChange,
     imageShadow,
     imageScale,
@@ -196,11 +197,11 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
           <div className="flex items-center justify-between">
             {/* Logo and Byline */}
             <div className="flex flex-col">
-              <img 
-                src="/logo.svg" 
-                alt="Elevatroy" 
-                height={120} 
-                width={120} 
+              <img
+                src="/logo.svg"
+                alt="Elevatroy"
+                height={120}
+                width={120}
                 className="w-[120px] h-auto drop-shadow-lg"
               />
               <a
@@ -216,7 +217,8 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
 
             {/* Contact Button */}
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-accent/20 
+              <div
+                className="absolute -inset-0.5 bg-gradient-to-r from-accent/20 
                 to-accent/0 rounded-lg blur opacity-0 group-hover:opacity-100 
                 transition duration-500"
               />
@@ -265,30 +267,59 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
                       image,
                       sliders: (
                         <>
-                          <CustomSlider label="Image Radius" value={imageRadius} onChange={handleImageRadiusChange} min={0} max={100} step={1} />
-                          <CustomSlider label="Canvas Radius" value={canvasRadius} onChange={handleCanvasRadiusChange} min={0} max={100} step={1} />
-                          <CustomSlider label="Shadow" value={imageShadow} onChange={handleShadowChange} min={0} max={12} step={1} />
-                          <CustomSlider label="Image Size" value={imageScale} onChange={handleImageScale} min={0.1} max={2} step={0.1} />
-                          <CustomSlider label="Content Size" value={contentScale} onChange={handleContentScale} min={0.1} max={2} step={0.1} />
+                          <CustomSlider
+                            label="Image Radius"
+                            value={imageRadius}
+                            onChange={handleImageRadiusChange}
+                            min={0}
+                            max={100}
+                            step={1}
+                          />
+                          <CustomSlider
+                            label="Canvas Radius"
+                            value={canvasRadius}
+                            onChange={handleCanvasRadiusChange}
+                            min={0}
+                            max={100}
+                            step={1}
+                          />
+                          <CustomSlider
+                            label="Shadow"
+                            value={imageShadow}
+                            onChange={handleShadowChange}
+                            min={0}
+                            max={12}
+                            step={1}
+                          />
+                          <CustomSlider
+                            label="Image Size"
+                            value={imageScale}
+                            onChange={handleImageScale}
+                            min={0.1}
+                            max={2}
+                            step={0.1}
+                          />
+                          <CustomSlider
+                            label="Content Size"
+                            value={contentScale}
+                            onChange={handleContentScale}
+                            min={0.1}
+                            max={2}
+                            step={0.1}
+                          />
                         </>
                       ),
                       switches: (
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between p-2.5 bg-dark-300 
+                          <div
+                            className="flex items-center justify-between p-2.5 bg-dark-300 
                             rounded-lg border border-dark-border/10 hover:bg-dark-400 transition-colors"
                           >
-                            <span className="text-xs font-medium text-zinc-400">Watermark</span>
-                            <Switch 
-                              checked={waterMark} 
-                              onChange={() => setWaterMarkState(!waterMark)}
-                            />
-                          </div>
-                          <div className="flex items-center justify-between p-2.5 bg-dark-300 
-                            rounded-lg border border-dark-border/10 hover:bg-dark-400 transition-colors"
-                          >
-                            <span className="text-xs font-medium text-zinc-400">Grid Overlay</span>
-                            <Switch 
-                              checked={gridOverlay} 
+                            <span className="text-xs font-medium text-zinc-400">
+                              Grid Overlay
+                            </span>
+                            <Switch
+                              checked={gridOverlay}
                               onChange={() => setGridOverlayState(!gridOverlay)}
                             />
                           </div>
@@ -309,7 +340,7 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
                         handleGradientDirectionChange,
                         backgroundColor,
                         setBackgroundColor,
-                        handleBackgroundImage
+                        handleBackgroundImage,
                       }),
                       ...(section.id === "controls" && {
                         threeD,
@@ -319,7 +350,7 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
                         translateY,
                         handleTranslateX,
                         handleTranslateY,
-                      })
+                      }),
                     }}
                   />
                 </div>

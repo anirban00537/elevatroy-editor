@@ -8,7 +8,6 @@ import {
   setImageRadius,
   setImageShadow,
   setScale,
-  setWaterMark,
   setBackgroundType,
   setImage,
   setProspective,
@@ -293,7 +292,6 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     imageRadius,
     canvasRadius,
     gridOverlay,
-    waterMark,
     imageShadow,
     canvasTexts,
     threeD,
@@ -369,7 +367,6 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     nodeStyle,
     imageSrc: image?.src,
     gridOverlay,
-    waterMark,
     canvasTexts,
     scaleStyle: scaleStyle,
     imageStyle: {
@@ -389,7 +386,6 @@ export const useCodeCanvas = () => {
     colors,
     canvasRadius,
     gridOverlay,
-    waterMark,
     canvasTexts,
     threeD,
     imageScale,
@@ -458,7 +454,6 @@ export const useCodeCanvas = () => {
     nodeStyle,
     imageSrc: null,
     gridOverlay,
-    waterMark,
     canvasTexts,
     scaleStyle: {
       transform: `scale(${scale})`,
@@ -481,7 +476,6 @@ export const useImageSection = () => {
     canvasRadius,
     threeD,
     gridOverlay,
-    waterMark,
     imageShadow,
     translateX,
     translateY,
@@ -553,9 +547,6 @@ export const useImageSection = () => {
   const setGridOverlayState = (status: boolean) => {
     dispatch(setGridOverlay(status));
   };
-  const setWaterMarkState = (status: boolean) => {
-    dispatch(setWaterMark(status));
-  };
 
   const handleCanvasRadiusChange = useCallback(
     (value: number) => {
@@ -577,8 +568,6 @@ export const useImageSection = () => {
     handleCanvasRadiusChange,
     setGridOverlayState,
     gridOverlay,
-    setWaterMarkState,
-    waterMark,
     handleShadowChange,
     imageShadow,
     threeD,

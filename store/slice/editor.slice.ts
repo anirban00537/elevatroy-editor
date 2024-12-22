@@ -39,7 +39,6 @@ export type EditorSlice = {
     frameTitle: string;
   };
   gridOverlay: boolean;
-  waterMark: boolean;
   canvasTexts: object[];
   elements: object[];
   fixedTextProperties: {
@@ -107,7 +106,6 @@ const initialState: EditorSlice = {
       fontFamily: "sans-serif",
     },
   },
-  waterMark: true,
   canvasTexts: [],
   elements: [],
   TextEditingProperty: null,
@@ -148,9 +146,7 @@ export const editorSlice = createSlice({
     setGridOverlay: (state, action: PayloadAction<boolean>) => {
       state.gridOverlay = action.payload;
     },
-    setWaterMark: (state, action: PayloadAction<boolean>) => {
-      state.waterMark = action.payload;
-    },
+   
     setImageShadow: (state, action: PayloadAction<number>) => {
       state.imageShadow = action.payload;
     },
@@ -279,7 +275,6 @@ export const {
   setImageRadius,
   setCanvasRadius,
   setGridOverlay,
-  setWaterMark,
   setImageShadow,
   setCanvasTexts,
   setTextEditing,

@@ -15,14 +15,8 @@ interface ImageCanvasProps {
 }
 
 const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
-  const {
-    nodeStyle,
-    imageSrc,
-    scaleStyle,
-    imageStyle,
-    waterMark,
-    canvasTexts,
-  } = useImageCanvas(image);
+  const { nodeStyle, imageSrc, scaleStyle, imageStyle, canvasTexts } =
+    useImageCanvas(image);
   const { elements } = useSelector((state: RootState) => state.editor);
 
   const [isResizable, setIsResizable] = useState(false);
@@ -66,16 +60,6 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
             imagePlaceCenter={true}
           />
         ))}
-
-        {waterMark && (
-          <div className="absolute bottom-10 right-10 flex items-center justify-center gap-1 text-white text-opacity-70 text-sm bg-blur-sm p-3 bg-black rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20">
-            <img src="/nameless-logo.png" className="w-10" alt="watermark" />
-            <div className="flex flex-col">
-              <span className="text-[10px]">Built with </span>
-              <span className="font-bold">Moiful.com</span>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
