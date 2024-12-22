@@ -46,6 +46,7 @@ interface SectionProps {
   translateY?: number;
   handleTranslateX?: (value: number) => void;
   handleTranslateY?: (value: number) => void;
+  image?: any;
 }
 
 const sections = [
@@ -76,13 +77,29 @@ const sections = [
         {image && (
           <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-dark-300">
             <img
-              src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+              src={image.src || image}
               alt="Preview"
               className="w-full h-full object-contain"
             />
           </div>
         )}
       </div>
+    )
+  },
+  {
+    id: "controls",
+    title: "Controls",
+    icon: Move,
+    Component: ({ ...props }: SectionProps) => (
+      <ControlSection
+        threeD={props.threeD}
+        handleRotateX={props.handleRotateX || (() => {})}
+        handleRotateY={props.handleRotateY || (() => {})}
+        translateX={props.translateX || 0}
+        translateY={props.translateY || 0}
+        handleTranslateX={props.handleTranslateX || (() => {})}
+        handleTranslateY={props.handleTranslateY || (() => {})}
+      />
     )
   },
   {
@@ -93,6 +110,14 @@ const sections = [
       <div className="space-y-5">
         {sliders}
       </div>
+    )
+  },
+  {
+    id: "background",
+    title: "Background",
+    icon: Palette,
+    Component: ({ ...props }: SectionProps) => (
+      <BackgroundSection {...props} />
     )
   },
   {
@@ -113,30 +138,6 @@ const sections = [
       <div className="space-y-3">
         {canvasInputs}
       </div>
-    )
-  },
-  {
-    id: "background",
-    title: "Background",
-    icon: Palette,
-    Component: ({ ...props }: SectionProps) => (
-      <BackgroundSection {...props} />
-    )
-  },
-  {
-    id: "controls",
-    title: "Controls",
-    icon: Move,
-    Component: ({ ...props }: SectionProps) => (
-      <ControlSection
-        threeD={props.threeD}
-        handleRotateX={props.handleRotateX || (() => {})}
-        handleRotateY={props.handleRotateY || (() => {})}
-        translateX={props.translateX || 0}
-        translateY={props.translateY || 0}
-        handleTranslateX={props.handleTranslateX || (() => {})}
-        handleTranslateY={props.handleTranslateY || (() => {})}
-      />
     )
   }
 ];
@@ -213,6 +214,7 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
                   <section.Component
                     {...{
                       handleFileInputChange,
+                      image,
                       sliders: (
                         <>
                           <CustomSlider label="Image Radius" value={imageRadius} onChange={handleImageRadiusChange} min={0} max={100} step={1} />
@@ -223,22 +225,26 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
                         </>
                       ),
                       switches: (
-                        <>
-                          <div className="flex items-center justify-between p-3 bg-dark-200 rounded-md">
-                            <span className="text-sm text-zinc-400">Watermark</span>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between p-2.5 bg-dark-300 
+                            rounded-lg border border-dark-border/10 hover:bg-dark-400 transition-colors"
+                          >
+                            <span className="text-xs font-medium text-zinc-400">Watermark</span>
                             <Switch 
                               checked={waterMark} 
                               onChange={() => setWaterMarkState(!waterMark)}
                             />
                           </div>
-                          <div className="flex items-center justify-between p-3 bg-dark-200 rounded-md">
-                            <span className="text-sm text-zinc-400">Grid Overlay</span>
+                          <div className="flex items-center justify-between p-2.5 bg-dark-300 
+                            rounded-lg border border-dark-border/10 hover:bg-dark-400 transition-colors"
+                          >
+                            <span className="text-xs font-medium text-zinc-400">Grid Overlay</span>
                             <Switch 
                               checked={gridOverlay} 
                               onChange={() => setGridOverlayState(!gridOverlay)}
                             />
                           </div>
-                        </>
+                        </div>
                       ),
                       canvasInputs: (
                         <>
