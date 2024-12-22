@@ -62,10 +62,7 @@ const config = {
           border: '#2A2A35',
           950: '#050507',
         },
-        accent: {
-          DEFAULT: '#3B82F6',
-          hover: '#2563EB',
-        }
+       
       },
       borderRadius: {
         lg: "var(--radius)",
