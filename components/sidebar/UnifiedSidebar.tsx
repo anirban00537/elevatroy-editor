@@ -53,16 +53,35 @@ const sections = [
     id: "image",
     title: "Image",
     icon: Image,
-    Component: ({ handleFileInputChange }: SectionProps) => (
+    Component: ({ handleFileInputChange, image }: SectionProps) => (
       <div className="space-y-4">
         <label
           htmlFor="fileInput"
           className="flex items-center justify-center w-full py-2.5 px-4 
             bg-dark-200 hover:bg-dark-300 rounded-md cursor-pointer 
-            text-xs text-zinc-400 transition-colors"
+            text-xs text-zinc-400 transition-colors group"
         >
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            onChange={handleFileInputChange}
+            className="hidden"
+          />
+          <Image size={16} className="mr-2 text-zinc-400 group-hover:text-zinc-300" />
           Upload Image
         </label>
+
+        {/* Show image preview if exists */}
+        {image && (
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-dark-300">
+            <img
+              src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+              alt="Preview"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        )}
       </div>
     )
   },
