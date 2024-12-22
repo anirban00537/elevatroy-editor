@@ -38,18 +38,19 @@ const BackgroundSection: React.FC = () => {
   };
 
   return (
-    <div className="px-5 md:w-[380px] h-full border-r border-slate-800 bg-[#191922]">
+    <div className="px-5 md:w-[380px] h-full border-r border-dark-border/20 bg-dark">
       <div className="">
         <motion.div
           variants={slideUpAnimation}
-          className="grid grid-cols-4 border rounded-lg border-slate-800 gap-2 mt-5 text-white"
+          className="grid grid-cols-4 border rounded-lg border-dark-border/20 gap-2 mt-5 text-zinc-200"
         >
           {["gradient", "solid", "image", "frame"].map((type) => (
             <motion.div
               key={type}
-              className={`p-2 m-1 rounded-md text-xs flex items-center justify-center cursor-pointer ${
-                activeTab === type ? "bg-slate-600 text-white" : ""
-              }`}
+              className={`p-2 m-1 rounded-md text-xs flex items-center justify-center cursor-pointer 
+                ${activeTab === type 
+                  ? "bg-dark-300 text-zinc-200" 
+                  : "hover:bg-dark-200"}`}
               onClick={() => {
                 handleTabChange(type);
               }}

@@ -42,14 +42,14 @@ const Page = () => {
   }, [handlePaste]);
 
   return (
-    <div className="bg-slate-950">
+    <div className="bg-dark-950">
       <EditorNavbar
         handleExport={handleExport}
         handleCopyImageToClipboard={handleCopyImageToClipboard}
       />
       <div className="flex flex-col-reverse md:flex-row items-start justify-center">
-        <div className="w-full bg-slate-950">
-          <main className="sticky top-0 z-10 md:z-0 md:relative md: bg-slate-950 md:bg-transparent">
+        <div className="w-full bg-dark-950">
+          <main className="sticky top-0 z-10 md:z-0 md:relative bg-dark-950 md:bg-transparent">
             <AnimatePresence>
               <motion.div
                 variants={fadeInAnimation}
@@ -57,18 +57,24 @@ const Page = () => {
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.5 }}
-                className="flex items-center h-[200px] md:h-screen md:min-h-screen max-h-screen justify-center md:flex-grow-0 md:flex-basis-2/3 mx-5  flex-col md:justify-center"
+                className="flex items-center h-[200px] md:h-screen md:min-h-screen 
+                  max-h-screen justify-center md:flex-grow-0 md:flex-basis-2/3 mx-5 
+                  flex-col md:justify-center"
               >
                 <ImageCanvas image={image} containerRef={containerRef} />
               </motion.div>
             </AnimatePresence>
           </main>
 
-          <div className="md:flex flex-col items-start justify-center md:items-start md:justify-start md:flex-grow-0 md:flex-basis-1/3 md:mt-[65px] md:fixed md:top-0 md:left-0 md:h-screen">
+          <div className="md:flex flex-col items-start justify-center md:items-start 
+            md:justify-start md:flex-grow-0 md:flex-basis-1/3 md:mt-[65px] md:fixed 
+            md:top-0 md:left-0 md:h-screen">
             <BackgroundSection />
           </div>
 
-          <div className="md:flex flex-col items-center justify-center md:items-start md:justify-start md:flex-grow-0 md:flex-basis-1/3 md:mt-[65px] md:fixed md:top-0 md:right-0 md:h-screen z-30">
+          <div className="md:flex flex-col items-center justify-center md:items-start 
+            md:justify-start md:flex-grow-0 md:flex-basis-1/3 md:mt-[65px] md:fixed 
+            md:top-0 md:right-0 md:h-screen z-30">
             <Sidebar
               handleFileInputChange={handleFileInputChange}
               handleExport={handleExport}

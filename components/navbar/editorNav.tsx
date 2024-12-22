@@ -53,7 +53,7 @@ export default function EditorNavbar({
   return (
     <Disclosure
       as="nav"
-      className="bg-[#191922] border-b border-b-gray-800 sticky top-0 z-50"
+      className="bg-dark border-b border-dark-border/20 sticky top-0 z-50"
     >
       {({ open }) => (
         <>
@@ -75,26 +75,33 @@ export default function EditorNavbar({
               <div className="flex items-center gap-0 md:gap-3">
                 <button
                   onClick={handleExportWithConfetti}
-                  className="md:inline-flex h-10 animate-shimmer items-center md:mr-3 hidden justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,95%,#000103)] bg-[length:200%_100%] px-6 font-medium text-xs text-white shadow-xl transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                  className="md:inline-flex h-10 items-center md:mr-3 hidden justify-center rounded-md 
+                    border border-dark-border bg-dark-200 px-6 font-medium text-xs text-zinc-200 
+                    shadow-lg transition-colors hover:bg-dark-300 focus:outline-none"
                 >
                   Download Image
                   <Download size={14} className="ml-1" />
                 </button>
                 <button
                   onClick={handleCopyImageToClipboard}
-                  className=" cursor-pointer p-2  bg-transparent border mr-3 border-gray-800 shadow-xl text-[12px] px-2 rounded-md flex items-center justify-center text-white"
+                  className="cursor-pointer p-2 bg-dark-200 border border-dark-border shadow-lg 
+                    text-[12px] px-2 rounded-md flex items-center justify-center text-zinc-200 
+                    hover:bg-dark-300"
                 >
                   <Copy size={14} className="ml-1" />
                 </button>
 
                 <label
-                  onClick={handleExportWithConfetti} // Use handleExportWithConfetti instead of handleExport
-                  className=" cursor-pointer p-2 bg-white border border-gray-800 shadow-xl mr-3 text-[12px] px-2 rounded-md flex items-center justify-center md:hidden text-black "
+                  onClick={handleExportWithConfetti}
+                  className="cursor-pointer p-2 bg-dark-200 border border-dark-border shadow-lg mr-3 
+                    text-[12px] px-2 rounded-md flex items-center justify-center md:hidden 
+                    text-zinc-200 hover:bg-dark-300"
                 >
                   <Download size={14} className="" />
                 </label>
                 {showCanvasSize && (
-                  <div className="hidden md:flex items-center mr-3 space-x-4 border border-gray-800 rounded-lg">
+                  <div className="hidden md:flex items-center mr-3 space-x-4 border 
+                    border-dark-border rounded-lg bg-dark-200 p-1">
                     <CanvasInputSize />
                     <CanvasSize />
                   </div>
@@ -106,7 +113,9 @@ export default function EditorNavbar({
                   rel="noopener noreferrer"
                   className="hidden md:flex items-center justify-center space-x-4"
                 >
-                  <label className="cursor-pointer p-2  bg-white border border-gray-800 shadow-xl text-[12px] px-2 rounded-md flex items-center justify-center text-black">
+                  <label className="cursor-pointer p-2 bg-dark-200 border border-dark-border 
+                    shadow-lg text-[12px] px-2 rounded-md flex items-center justify-center 
+                    text-zinc-200 hover:bg-dark-300">
                     Hire Me <ArrowRight className="ml-1" size={16} />
                   </label>
                 </a>
@@ -118,13 +127,16 @@ export default function EditorNavbar({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center space-x-4 md:hidden"
                 >
-                  <label className="cursor-pointer p-2  bg-white border border-gray-800 shadow-xl text-[12px] px-2 rounded-md flex items-center justify-center text-black">
+                  <label className="cursor-pointer p-2 bg-dark-200 border border-dark-border 
+                    shadow-lg text-[12px] px-2 rounded-md flex items-center justify-center 
+                    text-zinc-200 hover:bg-dark-300">
                     <ArrowRight className="ml-1" size={16} />
                   </label>
                 </a>
               </div>
               {showCanvasSize && (
-                <div className="flex items-center  justify-center space-x-4 border border-gray-800 rounded-lg md:hidden">
+                <div className="flex items-center  justify-center space-x-4 border 
+                  border-dark-border rounded-lg md:hidden bg-dark-200 p-1">
                   <CanvasInputSize />
                   <CanvasSize />
                 </div>
@@ -136,11 +148,13 @@ export default function EditorNavbar({
                     className="cursor-pointer"
                     onClick={handleDrawerToggle}
                   >
-                    <div className="hidden text-white p-2 border border-gray-800 rounded-lg focus:outline-none  items-center space-x-1">
+                    <div className="hidden text-zinc-200 p-2 border border-dark-border 
+                      rounded-lg focus:outline-none items-center space-x-1 bg-dark-200">
                       <FaBars />
                     </div>
                   </DrawerTrigger>
-                  <DrawerContent className="flex items-center justify-center bg-slate-950 border border-gray-900 w-full">
+                  <DrawerContent className="flex items-center justify-center bg-dark 
+                    border border-dark-border w-full">
                     <Sidebar
                       handleFileInputChange={handleFileInputChange}
                       handleExport={handleExport}

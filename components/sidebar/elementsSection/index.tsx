@@ -47,9 +47,11 @@ const ElementsSection: React.FC = () => {
     setIndex(index + 1);
   };
   return (
-    <div className="  gap-1 grid  grid-cols-5 items-center justify-start  text-white text-[10px] rounded-md w-full h-14 mt-3">
+    <div className="gap-1 grid grid-cols-5 items-center justify-start text-zinc-200 
+      text-[10px] rounded-md w-full h-14 mt-3">
       <motion.div
-        className="flex flex-col rounded-sm bg-slate-700 border-gray-800 border items-center justify-center py-4 cursor-pointer"
+        className="flex flex-col rounded-sm bg-dark-200 border-dark-border/20 border 
+          items-center justify-center py-4 cursor-pointer hover:bg-dark-300"
         whileHover="hover"
         onClick={handleAddText}
         whileTap="tap"
@@ -61,7 +63,8 @@ const ElementsSection: React.FC = () => {
       </motion.div>
       {imageEditorItems.map(({ id, path }, i) => (
         <motion.div
-          className="flex flex-col border-gray-800 bg-slate-700 border items-center justify-center rounded-sm py-4 cursor-pointer"
+          className="flex flex-col border-dark-border/20 bg-dark-200 border 
+            items-center justify-center rounded-sm py-4 cursor-pointer hover:bg-dark-300"
           onClick={() => addElementToState(path)}
           key={i}
           whileHover="hover"
@@ -72,7 +75,7 @@ const ElementsSection: React.FC = () => {
             <img
               src={path}
               alt={`Element ${i}`}
-              className="w-4 h-4 text-white"
+              className="w-4 h-4 text-zinc-200"
             />
           </div>
         </motion.div>

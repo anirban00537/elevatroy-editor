@@ -94,13 +94,15 @@ const ControlSection: React.FC<ControlSectionProps> = ({
       initial="hidden"
       animate="visible"
       exit="hidden"
-      className="overflow-y-auto "
+      className="overflow-y-auto"
     >
       <div className="pb-24">
-        <div className=" flex gap-4 mt-2">
+        <div className="flex gap-4 mt-2">
           <label
             htmlFor="fileInput"
-            className="cursor-pointer  p-2 border border-slate-800 shadow-xl text-[12px] px-14 rounded-md flex items-center justify-center text-white "
+            className="cursor-pointer p-2 border border-dark-border/20 shadow-lg 
+              text-[12px] px-14 rounded-md flex items-center justify-center text-zinc-200 
+              bg-dark-200 hover:bg-dark-300"
           >
             <Folder size={14} className="mr-2" />
             Upload Image
@@ -204,7 +206,8 @@ const ControlSection: React.FC<ControlSectionProps> = ({
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="flex flex-col border border-slate-800  p-3  rounded-xl  mt-6 items-center justify-center mb-5"
+            className="flex flex-col border border-dark-border/20 p-3 rounded-xl mt-6 
+              items-center justify-center mb-5 bg-dark-200"
           >
             <div className="grid grid-cols-2 gap-4 ">
               <div>
@@ -283,18 +286,20 @@ const ControlSection: React.FC<ControlSectionProps> = ({
         />
         <div className="flex flex-col items-center justify-center mt-6">
           <button
-            className="w-full flex items-center  justify-between bg-transparent border border-slate-800 py-4 px-6 hover:bg-slate-900 hover:bg-opacity-20 transition-all duration-200  text-[10px] text-gray-300 font-medium text-sm "
+            className="w-full flex items-center justify-between bg-dark-200 border 
+              border-dark-border/20 py-4 px-6 hover:bg-dark-300 transition-all duration-200 
+              text-[10px] text-zinc-200 font-medium text-sm"
             onClick={() => handleActiveTab("text")}
           >
             <span className="mr-2">Text Section</span>
-            <ChevronRight className=" text-white mr-3" size={15} />
+            <ChevronRight className="text-zinc-200 mr-3" size={15} />
           </button>
         </div>
 
-        <div className=" grid grid-cols-2 items-start justify-start mt-5">
+        <div className="grid grid-cols-2 items-start justify-start mt-5">
           <div className="flex items-center justify-start">
             <label
-              className="text-[12px] font-medium text-white mr-2"
+              className="text-[12px] font-medium text-zinc-200 mr-2"
               htmlFor="airplane-mode"
             >
               Watermark

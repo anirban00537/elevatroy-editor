@@ -49,38 +49,40 @@ const TextSection = () => {
       animate={{ opacity: 1, transition: { duration: 0.5 } }}
     >
       <ArrowLeft
-        className="text-white cursor-pointer mb-4 "
+        className="text-zinc-200 cursor-pointer mb-4"
         size={24}
         onClick={() => dispatch(setActiveTab("image"))}
       />
 
       <motion.div
         variants={slideUpAnimation}
-        className="grid grid-cols-2 w-full border rounded-lg border-slate-800 gap-2  text-white mb-4"
+        className="grid grid-cols-2 w-full border rounded-lg border-dark-border/20 
+          gap-2 text-zinc-200 mb-4"
       >
         <motion.div
-          className={`p-2 m-1 rounded-md text-xs flex items-center justify-center  cursor-pointer ${
-            selectedTab === "fixed" ? "bg-slate-600 text-white" : ""
-          }`}
+          className={`p-2 m-1 rounded-md text-xs flex items-center justify-center cursor-pointer 
+            ${selectedTab === "fixed" ? "bg-dark-300 text-zinc-200" : ""}`}
           onClick={() => setSelectedTab("fixed")}
         >
           Fixed Text
         </motion.div>
         <motion.div
-          className={`p-2 m-1 rounded-md text-xs flex items-center justify-center  cursor-pointer ${
-            selectedTab === "texts" ? "bg-slate-600 text-white" : ""
-          }`}
+          className={`p-2 m-1 rounded-md text-xs flex items-center justify-center cursor-pointer 
+            ${selectedTab === "texts" ? "bg-dark-300 text-zinc-200" : ""}`}
           onClick={() => setSelectedTab("texts")}
         >
           Draggable Text
         </motion.div>
       </motion.div>
+
       {selectedTab === "fixed" && <FixedTextSection />}
       {selectedTab === "texts" && (
         <>
           <div className="mt-4 w-full">
             <button
-              className="cursor-pointer p-3 w-full border border-gray-800 text-xs px-2 rounded-md flex items-center justify-center text-white mt-4 md:mt-0"
+              className="cursor-pointer p-3 w-full border border-dark-border/20 text-xs 
+                px-2 rounded-md flex items-center justify-center text-zinc-200 mt-4 
+                md:mt-0 bg-dark-200 hover:bg-dark-300"
               style={{ width: "100%" }}
               type="button"
               onClick={handleAddText}
@@ -88,15 +90,18 @@ const TextSection = () => {
               Add Text <Plus size={14} className="ml-2" />
             </button>
           </div>
+
           <div className="w-full mt-4 md:mt-0 overflow-y-auto">
             {canvasTexts.map((text: any, index: number) => (
               <TextProperty text={text} key={index} index={index} />
             ))}
           </div>
+
           {canvasTexts.length === 0 && (
-            <div className="w-full  border border-gray-800 rounded-md py-16 mt-6 flex items-center justify-center">
-              <p className="text-gray-500 text-sm">
-                <Pencil className="inline-block mr-2 " size={12} />
+            <div className="w-full border border-dark-border/20 rounded-md py-16 mt-6 
+              flex items-center justify-center bg-dark-200">
+              <p className="text-zinc-400 text-sm">
+                <Pencil className="inline-block mr-2" size={12} />
                 No Texts Added
               </p>
             </div>
