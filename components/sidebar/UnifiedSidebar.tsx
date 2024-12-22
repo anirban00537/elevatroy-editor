@@ -5,6 +5,7 @@ import {
   Download, Copy, Settings, Image, Sliders, Layout,
   Palette, // for background
   Move,
+  Github,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
@@ -188,6 +189,53 @@ const UnifiedSidebar = ({ handleFileInputChange, handleExport, handleCopyImageTo
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] overflow-y-auto">
+      {/* Logo Section */}
+      <div className="p-5 border-b border-white/10 bg-gradient-to-b from-dark-100/50 to-transparent">
+        <div className="flex flex-col">
+          {/* Logo and CTA */}
+          <div className="flex items-center justify-between">
+            {/* Logo and Byline */}
+            <div className="flex flex-col">
+              <img 
+                src="/logo.svg" 
+                alt="Elevatroy" 
+                height={120} 
+                width={120} 
+                className="w-[120px] h-auto drop-shadow-lg"
+              />
+              <a
+                href="https://elevatroy.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] text-zinc-500 ml-3 hover:text-zinc-400 
+                  transition-colors mt-1 tracking-wide"
+              >
+                by elevatroy.com
+              </a>
+            </div>
+
+            {/* Contact Button */}
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-accent/20 
+                to-accent/0 rounded-lg blur opacity-0 group-hover:opacity-100 
+                transition duration-500"
+              />
+              <a
+                href="https://elevatroy.com"
+                className="relative flex items-center gap-1.5 text-[10px] font-medium 
+                  text-zinc-400 hover:text-zinc-300 bg-dark-300/80 px-3 py-2 
+                  rounded-lg border border-dark-border/10 hover:bg-dark-400/80 
+                  transition-all duration-300"
+              >
+                <span>Contact for</span>
+                <span className="text-accent">Development</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
       <div className="p-5 space-y-6 pb-32">
         <AnimatePresence>
           {sections.map((section, index) => (
