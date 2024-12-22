@@ -17,6 +17,21 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Popover, Transition } from "@headlessui/react";
+
+interface ColorPalette {
+  id: number;
+  color: string;
+}
+
+interface GradientPickerProps {
+  gradientColors: ColorPalette[];
+  handleRemoveColor: (id: number) => void;
+  handleAddColor: () => void;
+  handleColorPickerChange: (color: string, id: number) => void;
+  addGradientToColorPallet: (colorArray: ColorPalette[]) => void;
+  handleGradientDirectionChange: (direction: string) => void;
+}
+
 const GradientPicker = ({
   gradientColors,
   handleRemoveColor,
@@ -24,7 +39,7 @@ const GradientPicker = ({
   handleColorPickerChange,
   addGradientToColorPallet,
   handleGradientDirectionChange,
-}: any) => {
+}: GradientPickerProps) => {
   const gradientDirections = [
     { name: "to top", icon: <ArrowUp size={18} color="white" /> },
     { name: "to top right", icon: <ArrowUpRight size={18} color="white" /> },
@@ -43,178 +58,86 @@ const GradientPicker = ({
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="relative pb-[500px] overflow-y-auto inline-block no-scrollbar text-left w-full my-3"
-      style={{ maxHeight: "calc(100vh - 200px)" }}
-    >
-      <div className="">
-        <AnimatePresence>
-          <>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="text-xs font-medium text-white"
-            >
-              Gradient Colors
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="grid grid-cols-6 gap-2 mt-5 "
-            >
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="relative w-10 h-10 rounded-full cursor-pointer border-2 border-gray-800"
-                onClick={handleAddColor}
+    <div className="space-y-6">
+      {/* Gradient Colors */}
+      <div>
+        <h4 className="text-xs text-zinc-400 mb-3">Gradient Colors</h4>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleAddColor}
+            className="w-8 h-8 rounded-full bg-dark-300 hover:bg-dark-400 
+              flex items-center justify-center text-zinc-400"
+          >
+            <Plus size={16} />
+          </button>
+          {gradientColors.map((color, index) => (
+            <Popover key={color.id}>
+              <Popover.Button
+                className="relative w-8 h-8 rounded-full border border-white/10"
+                style={{ backgroundColor: color.color }}
               >
-                <Plus
-                  color="white"
-                  size={18}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                />
-              </motion.button>
-              {gradientColors.map((gradient: any, index: number) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="relative gradient-item "
-                >
-                  <Popover>
-                    {({ open }) => (
-                      <>
-                        <Popover.Button
-                          className="relative w-10 h-10 rounded-full cursor-pointer border-2 border-white"
-                          style={{ backgroundColor: gradient.color }}
-                        >
-                          <span
-                            className="absolute -top-1 p-0.5 -right-1 bg-blue-500 rounded-full"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRemoveColor(gradient.id);
-                            }}
-                          >
-                            <X color="white" size={12} />
-                          </span>
-                        </Popover.Button>
-
-                        <Transition
-                          as={React.Fragment}
-                          enter="transition ease-out duration-200"
-                          enterFrom="opacity-0 translate-y-1"
-                          enterTo="opacity-100 translate-y-0"
-                          leave="transition ease-in duration-150"
-                          leaveFrom="opacity-100 translate-y-0"
-                          leaveTo="opacity-0 translate-y-1"
-                        >
-                          <Popover.Panel>
-                            <div className="absolute top-12 left-0">
-                              <HexColorPicker
-                                color={gradient.color}
-                                onChange={(color) => {
-                                  handleColorPickerChange(color, gradient.id);
-                                }}
-                              />
-                            </div>
-                          </Popover.Panel>
-                        </Transition>
-                      </>
-                    )}
-                  </Popover>
-                </motion.div>
-              ))}
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="mt-4"
-            >
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="text-xs font-medium text-white mb-2"
-              >
-                Gradient Direction
-              </motion.h2>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="flex space-x-2"
-              >
-                {gradientDirections.map((direction, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() =>
-                      handleGradientDirectionChange(direction.name)
-                    }
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="rounded-md overflow-hidden bg-gradient-to-br from-blue-500 to-blue-500 p-2 cursor-pointer flex items-center justify-center"
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      background: `linear-gradient(${
-                        direction.name
-                      }, ${gradientColors
-                        .map((gradient: any) => gradient.color)
-                        .join(", ")})`,
+                {index > 0 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveColor(color.id);
                     }}
+                    className="absolute -top-1 -right-1 w-4 h-4 rounded-full 
+                      bg-dark-200 text-zinc-400 text-xs flex items-center 
+                      justify-center hover:bg-dark-300"
                   >
-                    {direction.icon}
-                  </motion.button>
-                ))}
-              </motion.div>
-            </motion.div>
-          </>
-        </AnimatePresence>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          className="text-xs font-medium text-white my-4"
-        >
-          Color Palettes
-        </motion.h2>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          className="grid grid-cols-3 lg:grid-cols-4 gap-1"
-        >
-          {ColorPalettes.map((palette, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="  "
-            >
-              <div
-                className="w-full h-20 rounded-lg overflow-hidden  cursor-pointer "
-                onClick={() => {
-                  addGradientToColorPallet(palette);
-                }}
-                style={{
-                  background: `linear-gradient(to bottom left, ${palette
-                    .map((color) => color.color)
-                    .join(", ")})`,
-                }}
-              ></div>
-            </motion.div>
+                    ×
+                  </button>
+                )}
+              </Popover.Button>
+              <Popover.Panel className="absolute z-10">
+                <HexColorPicker
+                  color={color.color}
+                  onChange={(newColor) => handleColorPickerChange(newColor, color.id)}
+                />
+              </Popover.Panel>
+            </Popover>
           ))}
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+
+      {/* Gradient Direction */}
+      <div>
+        <h4 className="text-xs text-zinc-400 mb-3">Gradient Direction</h4>
+        <div className="grid grid-cols-8 gap-1">
+          {gradientDirections.map((direction, index) => (
+            <button
+              key={index}
+              onClick={() => handleGradientDirectionChange(direction.name)}
+              className="aspect-square rounded bg-dark-300 hover:bg-dark-400 
+                flex items-center justify-center text-zinc-400 transition-colors"
+            >
+              {direction.icon}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Color Palettes */}
+      <div>
+        <h4 className="text-xs text-zinc-400 mb-3">Color Palettes</h4>
+        <div className="grid grid-cols-4 gap-2">
+          {ColorPalettes.map((palette, index) => (
+            <button
+              key={index}
+              onClick={() => addGradientToColorPallet(palette)}
+              className="aspect-video rounded-lg overflow-hidden cursor-pointer 
+                hover:ring-2 hover:ring-white/20 transition-all"
+              style={{
+                background: `linear-gradient(to right, ${palette
+                  .map((color) => color.color)
+                  .join(", ")})`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

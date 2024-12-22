@@ -1,14 +1,31 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useColors } from "@/hooks/useScreenshotEditor";
-import GradientPicker from "@/components/LeftSidebarSection/gradientPicker";
+import GradientPicker from "./gradientPicker";
 import { setGradientDirection } from "@/store/slice/editor.slice";
 import { useDispatch } from "react-redux";
 import SolidColorComponent from "./solidColorPicker";
 import ImageComponent from "./imagePicker";
 import FramePicker from "./framePicker";
+import { CustomTabs } from "@/components/ui/custom-tabs";
+interface ColorPalette {
+  id: number;
+  color: string;
+}
 
-const BackgroundSection: React.FC = () => {
+interface BackgroundSectionProps {
+  gradientColors?: ColorPalette[];
+  handleRemoveColor?: (id: number) => void;
+  handleAddColor?: () => void;
+  handleColorPickerChange?: (newColor: string, id: number) => void;
+  addGradientToColorPallet?: (colorArray: ColorPalette[]) => void;
+  handleGradientDirectionChange?: (direction: string) => void;
+  backgroundColor?: string;
+  setBackgroundColor?: (color: string) => void;
+  handleBackgroundImage?: (image: string) => void;
+}
+
+const BackgroundSection: React.FC<BackgroundSectionProps> = (props) => {
   const {
     backgroundType,
     gradientColors,
@@ -20,64 +37,59 @@ const BackgroundSection: React.FC = () => {
     backgroundColor,
     handleBackgroundImage,
   } = useColors();
+  
   const dispatch = useDispatch();
-
   const [activeTab, setActiveTab] = useState("gradient");
-
-  const handleTabChange = (type: string) => {
-    setActiveTab(type);
-  };
 
   const handleGradientDirectionChange = (direction: string) => {
     dispatch(setGradientDirection(direction));
   };
 
-  const slideUpAnimation = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
+  const tabs = [
+    { id: "gradient", label: "Gradient" },
+    { id: "solid", label: "Solid" },
+    { id: "image", label: "Image" },
+    { id: "frame", label: "Frame" },
+  ];
 
-  return (
-    <div className="px-5 h-full border-b border-dark-border/20">
-      <div className="">
-        <motion.div
-          variants={slideUpAnimation}
-          className="grid grid-cols-4 border rounded-lg border-dark-border/20 gap-2 mt-5 text-zinc-200"
-        >
-          {["gradient", "solid", "image", "frame"].map((type) => (
-            <motion.div
-              key={type}
-              className={`p-2 m-1 rounded-md text-xs flex items-center justify-center cursor-pointer 
-                ${activeTab === type 
-                  ? "bg-dark-300 text-zinc-200" 
-                  : "hover:bg-dark-200"}`}
-              onClick={() => {
-                handleTabChange(type);
-              }}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </motion.div>
-          ))}
-        </motion.div>
-        {activeTab === "gradient" ? (
+  const renderContent = () => {
+    switch (activeTab) {
+      case "gradient":
+        return (
           <GradientPicker
-            gradientColors={gradientColors}
+            gradientColors={gradientColors as ColorPalette[]}
             handleRemoveColor={handleRemoveColor}
             handleAddColor={handleAddColor}
             handleColorPickerChange={handleColorPickerChange}
             addGradientToColorPallet={addGradientToColorPallet}
             handleGradientDirectionChange={handleGradientDirectionChange}
           />
-        ) : activeTab === "solid" ? (
+        );
+      case "solid":
+        return (
           <SolidColorComponent
-            setBackgroundColor={setBackgroundColor}
             backgroundColor={backgroundColor}
+            setBackgroundColor={setBackgroundColor}
           />
-        ) : activeTab === "image" ? (
-          <ImageComponent handleBackgroundImage={handleBackgroundImage} />
-        ) : activeTab === "frame" ? (
-          <FramePicker />
-        ) : null}
+        );
+      case "image":
+        return <ImageComponent handleBackgroundImage={handleBackgroundImage} />;
+      case "frame":
+        return <FramePicker />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className=" h-full border-b border-dark-border/20">
+      <CustomTabs
+        tabs={tabs}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+      />
+      <div className="mt-5">
+        {renderContent()}
       </div>
     </div>
   );
