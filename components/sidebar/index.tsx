@@ -30,10 +30,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [TextEditingProperty]);
 
   return (
-    <aside className="flex flex-col md:px-4 border border-t-0 border-b-0 
-      border-dark-border/20 md:flex-row h-screen w-full md:w-[380px] 
-      bg-dark no-scrollbar">
-      <div className="lg:flex-grow py-6 overflow-y-auto">
+    <aside className="flex flex-col px-4 h-full bg-dark">
+      <div className="flex-grow py-6 overflow-y-auto">
         <div>
           {activeTab === "image" && (
             <ControlSection

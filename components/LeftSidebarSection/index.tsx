@@ -38,7 +38,7 @@ const BackgroundSection: React.FC = () => {
   };
 
   return (
-    <div className="px-5 md:w-[380px] h-full border-r border-dark-border/20 bg-dark">
+    <div className="px-5 h-full border-b border-dark-border/20">
       <div className="">
         <motion.div
           variants={slideUpAnimation}

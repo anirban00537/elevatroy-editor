@@ -3,162 +3,200 @@ export const gridOverlayImage = `url(
         )`;
 
 export const ColorPalettes = [
+  // Modern and Vibrant
   [
-    { id: 1, color: "#F56565" },
-    { id: 2, color: "#F9A825" },
+    { id: 1, color: "#FF6B6B" }, // Coral Red
+    { id: 2, color: "#4ECDC4" }  // Turquoise
   ],
   [
-    { id: 3, color: "#F66681" },
-    { id: 4, color: "#F56565" },
+    { id: 3, color: "#845EC2" }, // Purple
+    { id: 4, color: "#FF9671" }  // Peach
   ],
   [
-    { id: 5, color: "#F472B6" },
-    { id: 6, color: "#F66681" },
+    { id: 5, color: "#00C9A7" }, // Mint
+    { id: 6, color: "#FFC75F" }  // Golden Yellow
+  ],
+  // Gradient-friendly pairs
+  [
+    { id: 7, color: "#08D9D6" }, // Bright Cyan
+    { id: 8, color: "#FF2E63" }  // Hot Pink
   ],
   [
-    { id: 7, color: "#FDE68A" },
-    { id: 8, color: "#F0E68C" },
+    { id: 9, color: "#892CDC" }, // Deep Purple
+    { id: 10, color: "#52057B" } // Royal Purple
   ],
   [
-    { id: 9, color: "#FDE68A" },
-    { id: 10, color: "#F9A825" },
+    { id: 11, color: "#FF61D2" }, // Pink
+    { id: 12, color: "#6F4A8E" }  // Deep Violet
+  ],
+  // Modern UI Colors
+  [
+    { id: 13, color: "#00BCD4" }, // Material Cyan
+    { id: 14, color: "#FF4081" }  // Material Pink
   ],
   [
-    { id: 11, color: "#F9A825" },
-    { id: 12, color: "#F472B6" },
+    { id: 15, color: "#2196F3" }, // Material Blue
+    { id: 16, color: "#FF9800" }  // Material Orange
+  ],
+  // Nature Inspired
+  [
+    { id: 17, color: "#4CAF50" }, // Forest Green
+    { id: 18, color: "#8BC34A" }  // Lime Green
   ],
   [
-    { id: 13, color: "#C084FC" },
-    { id: 14, color: "#F783AC" },
+    { id: 19, color: "#009688" }, // Teal
+    { id: 20, color: "#03DAC6" }  // Light Teal
+  ],
+  // Sunset Colors
+  [
+    { id: 21, color: "#FF7043" }, // Deep Orange
+    { id: 22, color: "#FFCA28" }  // Amber
   ],
   [
-    { id: 15, color: "#FD7D24" },
-    { id: 16, color: "#D977F9" },
+    { id: 23, color: "#FF5252" }, // Red
+    { id: 24, color: "#FF8A80" }  // Light Red
+  ],
+  // Additional Gradient Pairs
+  [
+    { id: 25, color: "#4158D0" }, // Royal Blue
+    { id: 26, color: "#C850C0" }  // Bright Purple
   ],
   [
-    { id: 17, color: "#A3E635" },
-    { id: 18, color: "#6EE7B7" },
+    { id: 27, color: "#0093E9" }, // Electric Blue
+    { id: 28, color: "#80D0C7" }  // Aqua
   ],
   [
-    { id: 19, color: "#4ADE80" },
-    { id: 20, color: "#FDE68A" },
+    { id: 29, color: "#8EC5FC" }, // Soft Blue
+    { id: 30, color: "#E0C3FC" }  // Soft Purple
   ],
   [
-    { id: 21, color: "#63B3ED" },
-    { id: 22, color: "#ABEBC6" },
+    { id: 31, color: "#D9AFD9" }, // Soft Pink
+    { id: 32, color: "#97D9E1" }  // Soft Cyan
   ],
   [
-    { id: 23, color: "#63B3ED" },
-    { id: 24, color: "#6DD7FF" },
+    { id: 33, color: "#0700b8" }, // Deep Blue
+    { id: 34, color: "#00ff88" }  // Neon Green
   ],
   [
-    { id: 25, color: "#6366F1" },
-    { id: 26, color: "#6DD7FF" },
+    { id: 35, color: "#FF3CAC" }, // Hot Pink
+    { id: 36, color: "#784BA0" }  // Purple
   ],
   [
-    { id: 27, color: "#4399ED" },
-    { id: 28, color: "#9662EA" },
+    { id: 37, color: "#2CD8D5" }, // Bright Cyan
+    { id: 38, color: "#C5C1FF" }  // Soft Purple
   ],
   [
-    { id: 29, color: "#C26BE6" },
-    { id: 30, color: "#63B3ED" },
+    { id: 39, color: "#FBAB7E" }, // Peach
+    { id: 40, color: "#F7CE68" }  // Golden
   ],
   [
-    { id: 31, color: "#FF6347" }, // New color
-    { id: 32, color: "#FFA500" }, // New color
+    { id: 41, color: "#85FFBD" }, // Mint
+    { id: 42, color: "#FFFB7D" }  // Light Yellow
   ],
   [
-    { id: 33, color: "#FFD700" }, // New color
-    { id: 34, color: "#32CD32" }, // New color
+    { id: 43, color: "#3EECAC" }, // Bright Green
+    { id: 44, color: "#EE74E1" }  // Pink
   ],
   [
-    { id: 35, color: "#8A2BE2" }, // New color
-    { id: 36, color: "#00FFFF" }, // New color
-  ],
-
-  [
-    { id: 37, color: "#C26BE6" },
-    { id: 38, color: "#F472B6" },
+    { id: 45, color: "#FA8BFF" }, // Bright Pink
+    { id: 46, color: "#2BD2FF" }  // Bright Blue
   ],
   [
-    { id: 39, color: "#9662EA" },
-    { id: 40, color: "#B040BC" },
+    { id: 47, color: "#FFE53B" }, // Yellow
+    { id: 48, color: "#FF2525" }  // Red
   ],
   [
-    { id: 41, color: "#9662EA" },
-    { id: 42, color: "#6366F1" },
+    { id: 49, color: "#21D4FD" }, // Sky Blue
+    { id: 50, color: "#B721FF" }  // Purple
   ],
   [
-    { id: 43, color: "#B040BC" },
-    { id: 44, color: "#6B46C1" },
+    { id: 51, color: "#08AEEA" }, // Ocean Blue
+    { id: 52, color: "#2AF598" }  // Sea Green
   ],
   [
-    { id: 45, color: "#3B82F6" },
-    { id: 46, color: "#545D6E" },
+    { id: 53, color: "#FEE140" }, // Yellow
+    { id: 54, color: "#FA709A" }  // Pink
   ],
   [
-    { id: 47, color: "#22C55E" },
-    { id: 48, color: "#4399ED" },
+    { id: 55, color: "#3B41C5" }, // Deep Blue
+    { id: 56, color: "#A981BB" }  // Lavender
   ],
   [
-    { id: 49, color: "#869AAC" },
-    { id: 50, color: "#6B46C1" },
+    { id: 57, color: "#00DBDE" }, // Cyan
+    { id: 58, color: "#FC00FF" }  // Magenta
   ],
   [
-    { id: 51, color: "#F9A825" },
-    { id: 52, color: "#EC4899" },
+    { id: 59, color: "#F761A1" }, // Pink
+    { id: 60, color: "#8C1BAB" }  // Deep Purple
   ],
   [
-    { id: 53, color: "#FFD3B6" },
-    { id: 54, color: "#B8A3E9" },
+    { id: 61, color: "#43E97B" }, // Green
+    { id: 62, color: "#38F9D7" }  // Turquoise
   ],
   [
-    { id: 55, color: "#78E4E4" },
-    { id: 56, color: "#A9DEF9" },
+    { id: 63, color: "#FA709A" }, // Salmon
+    { id: 64, color: "#FEE140" }  // Yellow
   ],
+  [
+    { id: 65, color: "#4FACFE" }, // Blue
+    { id: 66, color: "#00F2FE" }  // Cyan
+  ]
 ];
 
 export const FlatColors = [
-  "#FF5733",
-  "#33FF57",
-  "#5733FF",
-  "#FF33A1",
-  "#A1FF33",
-  "#33A1FF",
-  "#FF3366",
-  "#6633FF",
-  "#33FFA1",
-  "#FFA133",
-  "#A133FF",
-  "#33FFA1",
-  "#FF33A1",
-  "#A1FF33",
-  "#33A1FF",
-  "#FF5733",
-  "#33FF57",
-  "#5733FF",
-  "#FF33A1",
-  "#A1FF33",
-  "#FF33CC",
-  "#CCFF33",
-  "#33CCFF",
-  "#FF6633",
-  "#33FFCC",
-  "#CC33FF",
-  "#FF9933",
-  "#33FF99",
-  "#9933FF",
-  "#FF3366",
-  "#66FF33",
-  "#3366FF",
-  "#FF3366",
-  "#6633FF",
-  "#33FF99",
-  "#FFCC33",
-  "#33FF66",
-  "#CCFF33",
-  "#FF3366",
-  "#FF33CC",
+  // Vibrant Colors
+  "#FF6B6B", // Coral Red
+  "#4ECDC4", // Turquoise
+  "#45B7D1", // Sky Blue
+  "#96CEB4", // Sage
+  "#FFEEAD", // Cream
+  "#D4A5A5", // Dusty Rose
+  "#9B5DE5", // Purple
+  "#F15BB5", // Pink
+  "#FEE440", // Yellow
+  "#00BBF9", // Blue
+  "#00F5D4", // Mint
+  "#FF9F1C", // Orange
+  
+  // Pastel Colors
+  "#FFD93D", // Pastel Yellow
+  "#FF6B6B", // Pastel Red
+  "#4DD637", // Pastel Green
+  "#A8E6CF", // Pastel Mint
+  "#DCEDC1", // Pastel Lime
+  "#FFD3B6", // Pastel Orange
+  "#FFAAA5", // Pastel Pink
+  "#FF8B94", // Pastel Coral
+  
+  // Modern UI Colors
+  "#6200EA", // Deep Purple
+  "#2979FF", // Blue
+  "#00E676", // Green
+  "#FF3D00", // Deep Orange
+  "#C51162", // Pink
+  "#AA00FF", // Purple
+  "#00B8D4", // Cyan
+  "#FFAB00", // Amber
+  
+  // Gradient-friendly Colors
+  "#08D9D6", // Bright Cyan
+  "#252A34", // Dark Blue
+  "#FF2E63", // Hot Pink
+  "#892CDC", // Deep Purple
+  "#52057B", // Royal Purple
+  "#FF61D2", // Pink
+  "#6F4A8E", // Deep Violet
+  "#892CDC", // Electric Purple
+  
+  // Nature-inspired Colors
+  "#00BFA5", // Teal
+  "#64DD17", // Light Green
+  "#FFD600", // Yellow
+  "#FF6D00", // Orange
+  "#FF1744", // Red
+  "#304FFE", // Indigo
+  "#1DE9B6", // Teal
+  "#F50057"  // Pink
 ];
 export const Images = [
   "https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

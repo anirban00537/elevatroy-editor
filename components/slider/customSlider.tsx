@@ -1,41 +1,43 @@
-import React from "react";
-import { Slider } from "../ui/slider";
-import { cn } from "@/lib/utils";
+import * as React from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 
 interface CustomSliderProps {
   label: string;
   value: number;
   onChange: (value: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  className?: string;
+  min: number;
+  max: number;
+  step: number;
 }
 
-const CustomSlider: React.FC<CustomSliderProps> = ({
+const CustomSlider = ({
   label,
   value,
   onChange,
-  min = 0.5,
-  max = 2,
-  step = 0.1,
-  className = "",
-}) => {
+  min,
+  max,
+  step,
+}: CustomSliderProps) => {
   return (
-    <div className="flex  w-full py-2  items-start justify-start ">
-      <h1 className="text-xs flex items-center  font-medium  text-gray-300 w-full">
-        {/* <Shrink size={12} className="mr-2" /> */}
-        {label}
-      </h1>
-      <Slider
+    <span dir="ltr" data-orientation="horizontal" className="slider-component">
+      <SliderPrimitive.Root
+        className="relative flex w-full touch-none select-none items-center"
         value={[value]}
+        onValueChange={(value) => onChange(value[0])}
         max={max}
         min={min}
-        onValueChange={(newValue) => onChange(newValue[0])}
         step={step}
-        className={cn("w-[100%]", className)}
-      />
-    </div>
+      >
+        <SliderPrimitive.Track className="track">
+          <SliderPrimitive.Range className="rail" />
+        </SliderPrimitive.Track>
+        <SliderPrimitive.Thumb className="thumb" />
+        <div className="labels">
+          <span>{label}</span>
+          <span>{value}</span>
+        </div>
+      </SliderPrimitive.Root>
+    </span>
   );
 };
 

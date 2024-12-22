@@ -216,3 +216,65 @@ body {
 .glow-bg {
   background: linear-gradient(106.89deg, #45454587, #00335f8a);
 }
+
+.slider-component {
+  display: flex;
+  position: relative;
+  height: 28px;
+  border-radius: 8px;
+  touch-action: none;
+  background: rgb(17, 17, 24);
+  padding: 0;
+  width: 100%;
+}
+
+.slider-component .track {
+  background: rgb(30, 30, 40);
+  height: 100%;
+  border-radius: inherit;
+  cursor: pointer;
+  flex-grow: 1;
+  position: relative;
+}
+
+.slider-component .rail {
+  position: absolute;
+  background: rgb(42, 42, 53);
+  height: 100%;
+  border-radius: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.slider-component .rail:hover {
+  background: rgb(39, 39, 47);
+}
+
+.slider-component .thumb {
+  display: block;
+  height: 20px;
+  width: 2px;
+  margin: 4px 0 4px 8px;
+  border-radius: 2px;
+  background: rgb(255, 255, 255);
+  opacity: 0.36;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.slider-component .thumb:hover {
+  opacity: 0.5;
+  background: rgb(255, 255, 255);
+}
+
+.slider-component .labels {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  pointer-events: none;
+  color: rgb(153, 153, 153);
+  font-size: 12px;
+}
