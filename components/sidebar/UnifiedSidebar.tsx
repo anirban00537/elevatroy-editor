@@ -189,9 +189,13 @@ const UnifiedSidebar = ({
   const { width, height } = useSelector((state: RootState) => state.editor);
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] overflow-y-auto">
+    <aside className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] 
+      border-r border-white/10 flex flex-col"
+    >
       {/* Logo Section */}
-      <div className="p-5 border-b border-white/10 bg-gradient-to-b from-dark-100/50 to-transparent">
+      <div className="flex-shrink-0 p-5 border-b border-white/10 
+        bg-gradient-to-b from-dark-100/50 to-transparent"
+      >
         <div className="flex flex-col">
           {/* Logo and CTA */}
           <div className="flex items-center justify-between">
@@ -237,8 +241,8 @@ const UnifiedSidebar = ({
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="p-5 space-y-6 pb-32">
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto p-5 space-y-6">
         <AnimatePresence>
           {sections.map((section, index) => (
             <motion.section
@@ -362,8 +366,8 @@ const UnifiedSidebar = ({
         </AnimatePresence>
       </div>
 
-      {/* Fixed bottom buttons with deeper silver gradients */}
-      <div className="fixed bottom-0 left-0 w-[320px] p-4 bg-[#0D0D12] border-t border-white/10">
+      {/* Fixed Bottom Buttons */}
+      <div className="flex-shrink-0 p-4 bg-[#0D0D12] border-t border-white/10">
         <div className="flex gap-2">
           {/* Download Button - Deep Silver */}
           <button

@@ -29,37 +29,43 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
   };
 
   return (
-    <div style={scaleStyle}>
-      <div className="my-node" style={nodeStyle} ref={containerRef}>
-        <ImageWithControls
-          // @ts-ignore
-          src={imageSrc}
-          id={0}
-          handleRemove={handleRemove}
-          keepRatio={true}
-          style={imageStyle}
-          imagePlaceCenter={true}
-          showControl={false}
-        />
-        {!imageSrc && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <ImagePicker />
-          </div>
-        )}
-
-        {canvasTexts.map((property: any, index: number) => (
-          <DraggableText key={index} property={property} />
-        ))}
-        {elements.map((item: any, index: number) => (
-          <ElementsWithControls
-            key={index}
-            src={item.path}
-            id={item.id}
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+      <div className="transform-gpu" style={scaleStyle}>
+        <div 
+          className="my-node relative bg-dark-200 rounded-xl shadow-2xl" 
+          style={nodeStyle} 
+          ref={containerRef}
+        >
+          <ImageWithControls
+            // @ts-ignore
+            src={imageSrc}
+            id={0}
             handleRemove={handleRemove}
-            keepRatio={false}
+            keepRatio={true}
+            style={imageStyle}
             imagePlaceCenter={true}
+            showControl={false}
           />
-        ))}
+          {!imageSrc && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <ImagePicker />
+            </div>
+          )}
+
+          {canvasTexts.map((property: any, index: number) => (
+            <DraggableText key={index} property={property} />
+          ))}
+          {elements.map((item: any, index: number) => (
+            <ElementsWithControls
+              key={index}
+              src={item.path}
+              id={item.id}
+              handleRemove={handleRemove}
+              keepRatio={false}
+              imagePlaceCenter={true}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

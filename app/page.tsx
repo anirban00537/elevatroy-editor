@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Page = () => {
+export default function Home() {
   const {
     handleExport,
     handlePaste,
@@ -40,35 +40,21 @@ const Page = () => {
   }, [handlePaste]);
 
   return (
-    <div className="bg-dark-950">
-   
-      <div className="flex flex-col md:flex-row items-start">
-        <UnifiedSidebar
-          handleFileInputChange={handleFileInputChange}
-          handleExport={handleExport}
-          handleCopyImageToClipboard={handleCopyImageToClipboard}
-          image={image}
-        />
+    <main className="flex min-h-screen bg-[#0D0D12] overflow-hidden">
+      {/* Sidebar */}
+      <UnifiedSidebar
+        handleFileInputChange={handleFileInputChange}
+        handleExport={handleExport}
+        handleCopyImageToClipboard={handleCopyImageToClipboard}
+        image={image}
+      />
 
-        <div className="w-full md:ml-[380px]">
-          <main className="min-h-screen">
-            <AnimatePresence>
-              <motion.div
-                variants={fadeInAnimation}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ duration: 0.5 }}
-                className="flex items-center justify-center min-h-screen p-5"
-              >
-                <ImageCanvas image={image} containerRef={containerRef} />
-              </motion.div>
-            </AnimatePresence>
-          </main>
+      {/* Main Content Area */}
+      <div className="flex-1 ml-[320px] relative">
+        <div className="absolute inset-0 flex items-center justify-center p-8 overflow-hidden">
+          <ImageCanvas image={image} containerRef={containerRef} />
         </div>
       </div>
-    </div>
+    </main>
   );
-};
-
-export default Page;
+}
