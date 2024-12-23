@@ -20,7 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import CanvasSize from "../canvasSize";
 import CanvasInputSize from "../canvasSize/canvasInputSize";
 import CustomSlider from "../slider/customSlider";
-import { setGradientDirection } from "@/store/slice/editor.slice";
+import { setActiveText, setGradientDirection, setSelectedTexts } from "@/store/slice/editor.slice";
 import BackgroundSection from "../LeftSidebarSection";
 import { CustomTabs } from "@/components/ui/custom-tabs";
 import { cn } from "@/lib/utils";
@@ -86,7 +86,6 @@ const sections = [
           Upload Image
         </label>
 
-        {/* Show image preview if exists */}
         {image && (
           <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-dark-300">
             <img
@@ -204,16 +203,28 @@ const UnifiedSidebar = ({
 
   const { width, height } = useSelector((state: RootState) => state.editor);
 
+  // Create wrapped handlers that clear selection before action
+  const handleExportWithDeselect = (width: number, height: number) => {
+    dispatch(setSelectedTexts([]));
+    dispatch(setActiveText(null));
+    handleExport(width, height);
+  };
+
+  const handleCopyWithDeselect = () => {
+    dispatch(setSelectedTexts([]));
+    dispatch(setActiveText(null));
+    handleCopyImageToClipboard();
+  };
+
   return (
     <aside
-      className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] 
-      border-r border-white/10 flex flex-col"
+      id="sidebar"
+      className="fixed right-0 top-0 bottom-0 w-[300px] bg-dark-100 border-l 
+        border-white/5 flex flex-col overflow-hidden"
     >
       {/* Logo Section */}
-      <div
-        className="flex-shrink-0 p-5 border-b border-white/10 
-        bg-gradient-to-b from-dark-100/50 to-transparent"
-      >
+      <div className="flex-shrink-0 p-5 border-b border-white/10 
+        bg-gradient-to-b from-dark-100/50 to-transparent">
         <div className="flex flex-col">
           {/* Logo and CTA */}
           <div className="flex items-center justify-between">
@@ -389,7 +400,7 @@ const UnifiedSidebar = ({
         <div className="flex gap-2">
           {/* Download Button - Deep Silver */}
           <button
-            onClick={() => handleExport(width, height)}
+            onClick={() => handleExportWithDeselect(width, height)}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
               bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500
               hover:from-zinc-200 hover:via-zinc-300 hover:to-zinc-400
@@ -408,7 +419,7 @@ const UnifiedSidebar = ({
 
           {/* Copy Button - Darker Silver */}
           <button
-            onClick={handleCopyImageToClipboard}
+            onClick={handleCopyWithDeselect}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
               bg-gradient-to-b from-zinc-800 via-zinc-700 to-zinc-900
               hover:from-zinc-700 hover:via-zinc-600 hover:to-zinc-800

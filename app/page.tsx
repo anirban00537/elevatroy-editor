@@ -9,6 +9,8 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch } from 'react-redux';
+import { setImage } from '@/store/slice/editor.slice';
 
 export default function Home() {
   const {
@@ -40,7 +42,14 @@ export default function Home() {
   }, [handlePaste]);
 
   return (
-    <main className="flex min-h-screen bg-[#0D0D12] overflow-hidden">
+    <main className="flex min-h-screen bg-dark-200">
+      {/* Main Content Area */}
+      <div className="flex-1 mr-[300px]">
+        <div className="w-full h-screen flex items-center justify-center">
+          <ImageCanvas containerRef={containerRef} />
+        </div>
+      </div>
+
       {/* Sidebar */}
       <UnifiedSidebar
         handleFileInputChange={handleFileInputChange}
@@ -48,13 +57,6 @@ export default function Home() {
         handleCopyImageToClipboard={handleCopyImageToClipboard}
         image={image}
       />
-
-      {/* Main Content Area */}
-      <div className="flex-1 ml-[320px] relative">
-        <div className="absolute inset-0 flex items-center justify-center p-8 overflow-hidden">
-          <ImageCanvas image={image} containerRef={containerRef} />
-        </div>
-      </div>
     </main>
   );
 }

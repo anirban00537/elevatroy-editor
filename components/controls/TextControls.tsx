@@ -1,53 +1,75 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { updateTextElement, addTextElement, deleteTextElement, TextStyle, setActiveText, setSelectedTexts } from '@/store/slice/editor.slice';
-import CustomSlider from '../slider/customSlider';
-import { HexColorPicker } from 'react-colorful';
-import { Switch } from '../ui/switch';
-import { Trash2, Type, AlignLeft, AlignCenter, AlignRight, Bold, Italic, Underline, Check, GripVertical, ChevronDown, Layers } from 'lucide-react';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import {
+  updateTextElement,
+  addTextElement,
+  deleteTextElement,
+  TextStyle,
+  setActiveText,
+  setSelectedTexts,
+} from "@/store/slice/editor.slice";
+import CustomSlider from "../slider/customSlider";
+import { HexColorPicker } from "react-colorful";
+import { Switch } from "../ui/switch";
+import {
+  Trash2,
+  Type,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Bold,
+  Italic,
+  Underline,
+  Check,
+  GripVertical,
+  ChevronDown,
+  Layers,
+  Plus,
+  Minus,
+} from "lucide-react";
 
 // Predefined text templates
 const textTemplates = [
   {
-    name: 'Heading',
-    text: 'Add Your Heading',
+    name: "Heading",
+    text: "Add Your Heading",
     fontSize: 36,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
   {
-    name: 'Subheading',
-    text: 'Add Your Subheading',
+    name: "Subheading",
+    text: "Add Your Subheading",
     fontSize: 24,
-    fontWeight: 'semibold',
-    color: '#E5E5E5',
+    fontWeight: "semibold",
+    color: "#E5E5E5",
   },
   {
-    name: 'Body Text',
-    text: 'Add your description text here',
+    name: "Body Text",
+    text: "Add your description text here",
     fontSize: 16,
-    fontWeight: 'normal',
-    color: '#D1D1D1',
+    fontWeight: "normal",
+    color: "#D1D1D1",
   },
   {
-    name: 'Caption',
-    text: 'Add caption text',
+    name: "Caption",
+    text: "Add caption text",
     fontSize: 12,
-    fontWeight: 'normal',
-    color: '#A3A3A3',
+    fontWeight: "normal",
+    color: "#A3A3A3",
   },
 ];
 
 const fontFamilies = [
-  'Inter',
-  'Arial',
-  'Helvetica',
-  'Times New Roman',
-  'Georgia',
-  'Roboto',
-  'Montserrat',
-  'Open Sans',
+  "Inter",
+  "Arial",
+  "Helvetica",
+  "Times New Roman",
+  "Georgia",
+  "Roboto",
+  "Montserrat",
+  "Open Sans",
 ];
 
 interface GlobalStylesProps {
@@ -57,30 +79,30 @@ interface GlobalStylesProps {
 
 const globalStyles: GlobalStylesProps[] = [
   {
-    name: 'Modern Clean',
+    name: "Modern Clean",
     styles: {
-      fontFamily: 'Inter',
-      color: '#FFFFFF',
+      fontFamily: "Inter",
+      color: "#FFFFFF",
       textShadow: {
         enabled: true,
         offsetX: 0,
         offsetY: 2,
         blur: 4,
-        color: 'rgba(0,0,0,0.3)',
+        color: "rgba(0,0,0,0.3)",
       },
     },
   },
   {
-    name: 'Minimal Dark',
+    name: "Minimal Dark",
     styles: {
-      fontFamily: 'Helvetica',
-      color: '#E5E5E5',
+      fontFamily: "Helvetica",
+      color: "#E5E5E5",
       textShadow: {
         enabled: false,
         offsetX: 0,
         offsetY: 0,
         blur: 0,
-        color: 'rgba(0,0,0,0)',
+        color: "rgba(0,0,0,0)",
       },
     },
   },
@@ -89,14 +111,23 @@ const globalStyles: GlobalStylesProps[] = [
 
 const TextControls = () => {
   const dispatch = useDispatch();
-  const activeTextId = useSelector((state: RootState) => state.editor.activeTextId);
-  const textElements = useSelector((state: RootState) => state.editor.textElements);
-  const activeText = textElements.find(el => el.id === activeTextId);
+  const activeTextId = useSelector(
+    (state: RootState) => state.editor.activeTextId
+  );
+  const textElements = useSelector(
+    (state: RootState) => state.editor.textElements
+  );
+  const canvasTexts = useSelector(
+    (state: RootState) => state.editor.canvasTexts
+  );
+  const activeText = textElements.find((el) => el.id === activeTextId);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showGlobalControls, setShowGlobalControls] = useState(false);
-  const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
+  const selectedTexts = useSelector(
+    (state: RootState) => state.editor.selectedTexts
+  );
 
-  const handleAddTemplate = (template: typeof textTemplates[0]) => {
+  const handleAddTemplate = (template: (typeof textTemplates)[0]) => {
     dispatch(addTextElement(template));
   };
 
@@ -108,15 +139,17 @@ const TextControls = () => {
 
   const handleUpdateStyle = (updates: Partial<TextStyle>) => {
     if (activeTextId && activeText) {
-      dispatch(updateTextElement({
-        id: activeTextId,
-        updates,
-      }));
+      dispatch(
+        updateTextElement({
+          id: activeTextId,
+          updates,
+        })
+      );
     }
   };
 
   const handleSelectAll = () => {
-    dispatch(setSelectedTexts(textElements.map(el => el.id)));
+    dispatch(setSelectedTexts(textElements.map((el) => el.id)));
   };
 
   const handleDeselectAll = () => {
@@ -124,8 +157,9 @@ const TextControls = () => {
   };
 
   const handleUpdateMultiple = (updates: Partial<TextStyle>) => {
-    const textsToUpdate = selectedTexts.length > 0 ? selectedTexts : [activeTextId!];
-    textsToUpdate.forEach(id => {
+    const textsToUpdate =
+      selectedTexts.length > 0 ? selectedTexts : [activeTextId!];
+    textsToUpdate.forEach((id) => {
       if (id) {
         dispatch(updateTextElement({ id, updates }));
       }
@@ -138,18 +172,58 @@ const TextControls = () => {
 
   const handleTextSelection = (textId: string) => {
     if (selectedTexts.includes(textId)) {
-      dispatch(setSelectedTexts(selectedTexts.filter(id => id !== textId)));
+      dispatch(setSelectedTexts(selectedTexts.filter((id) => id !== textId)));
     } else {
       dispatch(setSelectedTexts([...selectedTexts, textId]));
     }
   };
 
+  const handleIncreaseFontSize = () => {
+    const textsToUpdate = selectedTexts.length > 0 ? selectedTexts : (activeTextId ? [activeTextId] : []);
+    console.log('Texts to update:', textsToUpdate);
+    
+    // Get current text's font size
+    const currentText = textElements.find(t => t.id === textsToUpdate[0]);
+    const currentSize = currentText?.fontSize || 16;
+    const newSize = Math.min(currentSize + 4, 200);
+    
+    // Update all selected texts with the new size
+    textsToUpdate.forEach(id => {
+      dispatch(updateTextElement({
+        id,
+        updates: { fontSize: newSize }
+      }));
+    });
+  };
+
+  const handleDecreaseFontSize = () => {
+    const textsToUpdate = selectedTexts.length > 0 ? selectedTexts : (activeTextId ? [activeTextId] : []);
+    console.log('Texts to update:', textsToUpdate);
+    
+    // Get current text's font size
+    const currentText = textElements.find(t => t.id === textsToUpdate[0]);
+    const currentSize = currentText?.fontSize || 16;
+    const newSize = Math.max(currentSize - 4, 8);
+    
+    // Update all selected texts with the new size
+    textsToUpdate.forEach(id => {
+      dispatch(updateTextElement({
+        id,
+        updates: { fontSize: newSize }
+      }));
+    });
+  };
+
   // Add selection indicator at the top
   const selectionIndicator = selectedTexts.length > 0 && (
-    <div className="flex items-center justify-between py-2 px-3 bg-purple-500/20 
+    <div
+      className="flex items-center justify-between py-2 px-3 bg-purple-500/20 
       border border-purple-500/30 rounded-md text-xs text-purple-200"
     >
-      <span>{selectedTexts.length} text{selectedTexts.length > 1 ? 's' : ''} selected</span>
+      <span>
+        {selectedTexts.length} text{selectedTexts.length > 1 ? "s" : ""}{" "}
+        selected
+      </span>
       <button
         onClick={handleDeselectAll}
         className="text-purple-300 hover:text-purple-100 transition-colors"
@@ -159,8 +233,13 @@ const TextControls = () => {
     </div>
   );
 
+  // Add this at the top of TextControls component
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="space-y-4 rounded-lg">
+    <div className="space-y-4 rounded-lg" onClick={stopPropagation}>
       {/* Add selection indicator at the top */}
       {selectionIndicator}
 
@@ -173,7 +252,9 @@ const TextControls = () => {
         >
           <ChevronDown
             size={16}
-            className={`transform transition-transform text-zinc-400 ${showGlobalControls ? 'rotate-180' : ''}`}
+            className={`transform transition-transform text-zinc-400 ${
+              showGlobalControls ? "rotate-180" : ""
+            }`}
           />
         </button>
       </div>
@@ -204,7 +285,8 @@ const TextControls = () => {
           <div className="space-y-2 p-3 bg-dark-300/30 rounded-md border border-white/5">
             <div className="flex items-center justify-between">
               <span className="text-xs text-zinc-400">
-                {selectedTexts.length} text{selectedTexts.length > 1 ? 's' : ''} selected
+                {selectedTexts.length} text{selectedTexts.length > 1 ? "s" : ""}{" "}
+                selected
               </span>
               <button
                 onClick={handleDeselectAll}
@@ -213,29 +295,29 @@ const TextControls = () => {
                 Clear
               </button>
             </div>
-            
+
             {/* Batch Style Controls */}
             <div className="grid grid-cols-4 gap-2">
               <button
-                onClick={() => handleUpdateMultiple({ fontWeight: 'bold' })}
+                onClick={() => handleUpdateMultiple({ fontWeight: "bold" })}
                 className="p-2 bg-dark-400/50 hover:bg-dark-500/50 rounded-md"
               >
                 <Bold size={14} className="text-zinc-400" />
               </button>
               <button
-                onClick={() => handleUpdateMultiple({ fontStyle: 'italic' })}
+                onClick={() => handleUpdateMultiple({ fontStyle: "italic" })}
                 className="p-2 bg-dark-400/50 hover:bg-dark-500/50 rounded-md"
               >
                 <Italic size={14} className="text-zinc-400" />
               </button>
               <button
-                onClick={() => handleUpdateMultiple({ textAlign: 'left' })}
+                onClick={() => handleUpdateMultiple({ textAlign: "left" })}
                 className="p-2 bg-dark-400/50 hover:bg-dark-500/50 rounded-md"
               >
                 <AlignLeft size={14} className="text-zinc-400" />
               </button>
               <button
-                onClick={() => handleUpdateMultiple({ textAlign: 'center' })}
+                onClick={() => handleUpdateMultiple({ textAlign: "center" })}
                 className="p-2 bg-dark-400/50 hover:bg-dark-500/50 rounded-md"
               >
                 <AlignCenter size={14} className="text-zinc-400" />
@@ -246,7 +328,7 @@ const TextControls = () => {
             <div className="space-y-2">
               <span className="text-xs text-zinc-400">Set Color for All</span>
               <div className="flex gap-2">
-                {['#FFFFFF', '#E5E5E5', '#A3A3A3', '#3B82F6'].map((color) => (
+                {["#FFFFFF", "#E5E5E5", "#A3A3A3", "#3B82F6"].map((color) => (
                   <button
                     key={color}
                     onClick={() => handleUpdateMultiple({ color })}
@@ -276,7 +358,10 @@ const TextControls = () => {
                 text-xs text-zinc-400 hover:text-zinc-300 border border-white/5
                 hover:border-white/10 hover:shadow-lg hover:shadow-black/20"
             >
-              <Type size={14} className="mr-2 opacity-50 group-hover:opacity-100" />
+              <Type
+                size={14}
+                className="mr-2 opacity-50 group-hover:opacity-100"
+              />
               {template.name}
             </button>
           ))}
@@ -286,7 +371,9 @@ const TextControls = () => {
       {/* Text List and Controls */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-zinc-400">Text Elements</span>
+          <span className="text-xs font-medium text-zinc-400">
+            Text Elements
+          </span>
           <div className="h-px flex-1 mx-3 bg-white/5" />
         </div>
         <div className="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar">
@@ -301,9 +388,10 @@ const TextControls = () => {
                 onClick={() => handleTextSelection(text.id)}
                 className={`group flex items-center gap-3 p-3 rounded-md cursor-pointer 
                   transition-all duration-200 border border-transparent
-                  ${selectedTexts.includes(text.id) 
-                    ? 'bg-blue-500/20 border-blue-500/30' 
-                    : 'hover:bg-dark-400/50 hover:border-white/10'
+                  ${
+                    selectedTexts.includes(text.id)
+                      ? "bg-blue-500/20 border-blue-500/30"
+                      : "hover:bg-dark-400/50 hover:border-white/10"
                   }`}
               >
                 <input
@@ -314,14 +402,21 @@ const TextControls = () => {
                     if (e.target.checked) {
                       dispatch(setSelectedTexts([...selectedTexts, text.id]));
                     } else {
-                      dispatch(setSelectedTexts(selectedTexts.filter(id => id !== text.id)));
+                      dispatch(
+                        setSelectedTexts(
+                          selectedTexts.filter((id) => id !== text.id)
+                        )
+                      );
                     }
                   }}
                   className="w-4 h-4 rounded border-white/10"
                 />
-                <GripVertical size={14} className="text-zinc-500 group-hover:text-zinc-400" />
+                <GripVertical
+                  size={14}
+                  className="text-zinc-500 group-hover:text-zinc-400"
+                />
                 <div className="flex-1 min-w-0">
-                  <div 
+                  <div
                     className="text-sm text-zinc-300 truncate"
                     style={{
                       fontFamily: text.fontFamily,
@@ -356,10 +451,12 @@ const TextControls = () => {
       {activeText && (
         <div className="space-y-4 pt-4 border-t border-white/5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-400">Style Controls</span>
+            <span className="text-xs font-medium text-zinc-400">
+              Style Controls
+            </span>
             <div className="h-px flex-1 mx-3 bg-white/5" />
           </div>
-          
+
           {/* Font Family Selector */}
           <select
             value={activeText.fontFamily}
@@ -369,20 +466,25 @@ const TextControls = () => {
               focus:outline-none focus:ring-2 focus:ring-blue-500/20"
           >
             {fontFamilies.map((font) => (
-              <option key={font} value={font}>{font}</option>
+              <option key={font} value={font}>
+                {font}
+              </option>
             ))}
           </select>
 
           {/* Style Controls Grid */}
           <div className="grid grid-cols-3 gap-2">
             <button
-              onClick={() => handleUpdateStyle({ 
-                fontWeight: activeText.fontWeight === 'bold' ? 'normal' : 'bold' 
-              })}
+              onClick={() =>
+                handleUpdateStyle({
+                  fontWeight:
+                    activeText.fontWeight === "bold" ? "normal" : "bold",
+                })
+              }
               className={`p-2.5 rounded-md transition-all duration-200 ${
-                activeText.fontWeight === 'bold' 
-                  ? 'bg-blue-500 text-white' 
-                  : 'bg-dark-300/50 text-zinc-400 hover:bg-dark-400/50'
+                activeText.fontWeight === "bold"
+                  ? "bg-blue-500 text-white"
+                  : "bg-dark-300/50 text-zinc-400 hover:bg-dark-400/50"
               }`}
             >
               <Bold size={16} />
@@ -393,6 +495,35 @@ const TextControls = () => {
           {/* Color and Shadow controls with similar styling improvements */}
         </div>
       )}
+
+      {/* Quick Font Size Controls */}
+      <div className="space-y-2">
+        <span className="text-xs text-zinc-400">Quick Font Size</span>
+        <div className="flex gap-2">
+          <button
+            onClick={handleDecreaseFontSize}
+            className="p-2 rounded-md bg-dark-300/50 hover:bg-dark-400/50 
+              transition-all duration-200 border border-white/5 
+              hover:border-white/10 group"
+          >
+            <Minus
+              size={14}
+              className="text-zinc-400 group-hover:text-zinc-300"
+            />
+          </button>
+          <button
+            onClick={handleIncreaseFontSize}
+            className="p-2 rounded-md bg-dark-300/50 hover:bg-dark-400/50 
+              transition-all duration-200 border border-white/5 
+              hover:border-white/10 group"
+          >
+            <Plus
+              size={14}
+              className="text-zinc-400 group-hover:text-zinc-300"
+            />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -416,6 +547,6 @@ const TextControls = () => {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
-`
+`;
 
-export default TextControls; 
+export default TextControls;

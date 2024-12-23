@@ -31,7 +31,10 @@ export const useExport = () => {
   const dispatch = useDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleImageUpload(e);
+    const file = e.target.files?.[0];
+    if (file) {
+      handleImageUpload(file);
+    }
   };
   const handlePaste = async (e: React.ClipboardEvent<HTMLInputElement>) => {
     const items = e.clipboardData?.items;
@@ -70,21 +73,16 @@ export const useExport = () => {
       reader.readAsDataURL(file);
     }
   };
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const img = new window.Image();
-        img.src = reader.result as string;
-        img.onload = () => {
-          dispatch(setImage(img));
-        };
+  const handleImageUpload = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        dispatch(setImage(img.src));
       };
-
-      reader.readAsDataURL(file);
-    }
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleExport = useCallback(

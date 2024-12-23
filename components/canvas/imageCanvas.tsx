@@ -13,16 +13,17 @@ import TextEditor from '../text/TextEditor';
 import { setSelectedTexts, setActiveText } from "@/store/slice/editor.slice";
 
 interface ImageCanvasProps {
-  image: HTMLImageElement | null;
   containerRef: React.RefObject<HTMLDivElement>;
 }
 
-const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
-  const { nodeStyle, scaleStyle, imageStyle, canvasTexts, imageSrc } = useImageCanvas(image);
+const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
+  const { nodeStyle, scaleStyle, imageStyle } = useImageCanvas(null);
+  const image = useSelector((state: RootState) => state.editor.image);
   const { elements } = useSelector((state: RootState) => state.editor);
   const { shadowSettings } = useSelector((state: RootState) => state.editor);
   const textElements = useSelector((state: RootState) => state.editor.textElements);
   const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
+  const canvasTexts = useSelector((state: RootState) => state.editor.canvasTexts);
 
   const [isResizable, setIsResizable] = useState(false);
   const dispatch = useDispatch();
@@ -38,8 +39,12 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       const isInsideCanvas = canvasRef.current?.contains(event.target as Node);
+      const isControlElement = (event.target as Element)?.closest('.control-element');
+      const isTextControl = (event.target as Element)?.closest('[data-text-control]');
+      const isSidebar = (event.target as Element)?.closest('#sidebar');
       
-      if (!isInsideCanvas || event.target === canvasRef.current) {
+      if (isInsideCanvas && !isControlElement && !isTextControl && 
+          !isSidebar && event.target === canvasRef.current) {
         dispatch(setSelectedTexts([]));
         dispatch(setActiveText(null));
       }
@@ -71,39 +76,33 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
           )}
           style={nodeStyle}
         >
-          <div 
-            className="relative w-full h-full" 
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            <ImageWithControls
-              src={imageSrc ?? ''}
-              id={0}
-              handleRemove={handleRemove}
-              keepRatio={true}
-              style={{
-                ...imageStyle,
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-              imagePlaceCenter={true}
-              showControl={false}
-            />
-
-            {shadowSettings.enabled && (
-              <div 
-                className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent 
-                  pointer-events-none opacity-50 rounded-xl"
-                style={{
-                  transform: 'translateZ(-1px)',
-                  filter: 'blur(2px)',
-                }}
+          {image ? (
+            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
+              <ImageWithControls
+                src={typeof image === 'string' ? image : image.src}
+                id={0}
+                handleRemove={handleRemove}
+                keepRatio={true}
+                style={imageStyle}
+                imagePlaceCenter={true}
+                showControl={false}
               />
-            )}
-          </div>
-
-          {!imageSrc && (
+            </div>
+          ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm">
               <ImagePicker />
             </div>
+          )}
+
+          {shadowSettings.enabled && (
+            <div 
+              className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent 
+                pointer-events-none opacity-50 rounded-xl"
+              style={{
+                transform: 'translateZ(-1px)',
+                filter: 'blur(2px)',
+              }}
+            />
           )}
 
           {canvasTexts.map((property: any, index: number) => (

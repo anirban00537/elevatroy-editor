@@ -3,7 +3,7 @@ import { Upload, Image as ImageIcon, ArrowDown } from "lucide-react";
 import React, { useState } from "react";
 
 const ImagePicker = () => {
-  const { handleImageUploadDrop } = useExport();
+  const { handleImageUploadDrop, handleImageUpload } = useExport();
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -22,6 +22,13 @@ const ImagePicker = () => {
       await handleImageUploadDrop(e.dataTransfer.files);
     } catch (error) {
       console.error("Upload failed:", error);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      handleImageUpload(files[0]);
     }
   };
 
@@ -112,6 +119,7 @@ const ImagePicker = () => {
         id="fileInput"
         type="file"
         accept="image/*"
+        onChange={handleFileChange}
         className="hidden"
       />
     </div>
