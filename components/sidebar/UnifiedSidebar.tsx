@@ -204,15 +204,19 @@ const UnifiedSidebar = ({
   const { width, height } = useSelector((state: RootState) => state.editor);
 
   // Create wrapped handlers that clear selection before action
-  const handleExportWithDeselect = (width: number, height: number) => {
+  const handleExportWithDeselect = async (width: number, height: number) => {
     dispatch(setSelectedTexts([]));
     dispatch(setActiveText(null));
+    
+    await new Promise(resolve => setTimeout(resolve, 300));
     handleExport(width, height);
   };
 
-  const handleCopyWithDeselect = () => {
+  const handleCopyWithDeselect = async () => {
     dispatch(setSelectedTexts([]));
     dispatch(setActiveText(null));
+    
+    await new Promise(resolve => setTimeout(resolve, 300));
     handleCopyImageToClipboard();
   };
 
