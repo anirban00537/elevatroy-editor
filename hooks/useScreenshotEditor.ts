@@ -293,6 +293,7 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     canvasTexts,
     threeD,
     imageScale,
+    shadowSettings,
   } = useSelector((state: RootState) => state.editor);
 
   const { backgroundColor, gradientColors, backgroundType } = useColors();
@@ -328,6 +329,24 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
       ? `url(${colors.backgroundImage})`
       : backgroundColor;
 
+  const generateImageShadow = () => {
+    const shadows = [];
+
+    if (shadowSettings.enabled) {
+      const { offsetX, offsetY, blur, spread, color, opacity, inset } = shadowSettings;
+      const rgba = `rgba(${parseInt(color.slice(1,3), 16)}, ${parseInt(color.slice(3,5), 16)}, ${parseInt(color.slice(5,7), 16)}, ${opacity})`;
+      
+      // For image, we use filter: drop-shadow instead of box-shadow for better results
+      shadows.push(`drop-shadow(${offsetX}px ${offsetY}px ${blur}px ${rgba})`);
+    }
+
+    // Add depth and ambient shadows
+    shadows.push(`drop-shadow(0 ${imageShadow}px ${imageShadow * 2}px rgba(0, 0, 0, 0.15))`);
+    shadows.push(`drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))`);
+    
+    return shadows.join(' ');
+  };
+
   const nodeStyle: React.CSSProperties = {
     width: `${width}px`,
     height: `${height}px`,
@@ -344,6 +363,8 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     border: '1px solid rgba(255, 255, 255, 0.12)',
     backdropFilter: 'blur(12px)',
     WebkitBackdropFilter: 'blur(12px)',
+    boxShadow: 'none', // Remove container shadow
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   };
 
   const scaleStyle: React.CSSProperties = {
@@ -352,7 +373,6 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     marginTop: "10px",
     willChange: "transform, filter",
     imageRendering: "auto",
-    filter: 'drop-shadow(0 30px 60px rgba(0, 0, 0, 0.25))',
   };
 
   const imageStyle: React.CSSProperties = {
@@ -366,8 +386,10 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     `,
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
     position: "relative",
-    filter: 'contrast(1.03) saturate(1.05) brightness(1.02)',
+    filter: `${generateImageShadow()} contrast(1.03) saturate(1.05) brightness(1.02)`,
     WebkitFontSmoothing: 'antialiased',
+    transformStyle: 'preserve-3d',
+    backfaceVisibility: 'hidden',
   };
 
   return {

@@ -11,6 +11,7 @@ import {
   Palette, // for background
   Move,
   Github,
+  Cloud,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
@@ -24,6 +25,7 @@ import { CustomTabs } from "@/components/ui/custom-tabs";
 import { cn } from "@/lib/utils";
 import type { ColorPalette } from "@/types";
 import ControlSection from "../sidebar/controlSection";
+import ShadowControls from "../controls/ShadowControls";
 
 interface UnifiedSidebarProps {
   handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -139,6 +141,12 @@ const sections = [
       <div className="space-y-3">{canvasInputs}</div>
     ),
   },
+  {
+    id: "shadows",
+    title: "Shadows",
+    icon: Cloud,
+    Component: () => <ShadowControls />,
+  },
 ];
 
 const UnifiedSidebar = ({
@@ -189,11 +197,13 @@ const UnifiedSidebar = ({
   const { width, height } = useSelector((state: RootState) => state.editor);
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] 
+    <aside
+      className="fixed left-0 top-0 bottom-0 w-[320px] bg-[#0D0D12] 
       border-r border-white/10 flex flex-col"
     >
       {/* Logo Section */}
-      <div className="flex-shrink-0 p-5 border-b border-white/10 
+      <div
+        className="flex-shrink-0 p-5 border-b border-white/10 
         bg-gradient-to-b from-dark-100/50 to-transparent"
       >
         <div className="flex flex-col">
@@ -381,7 +391,10 @@ const UnifiedSidebar = ({
               hover:shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.9)]
               hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <Download size={16} className="text-zinc-700 group-hover:text-zinc-900" />
+            <Download
+              size={16}
+              className="text-zinc-700 group-hover:text-zinc-900"
+            />
             Download
           </button>
 
@@ -397,7 +410,10 @@ const UnifiedSidebar = ({
               hover:shadow-[0_4px_8px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)]
               hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <Copy size={16} className="text-zinc-400 group-hover:text-zinc-200" />
+            <Copy
+              size={16}
+              className="text-zinc-400 group-hover:text-zinc-200"
+            />
             Copy
           </button>
         </div>

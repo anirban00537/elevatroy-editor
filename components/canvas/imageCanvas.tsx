@@ -8,6 +8,7 @@ import { RootState } from "@/store";
 import { removeElement } from "@/store/slice/editor.slice";
 import ImagePicker from "../imagePicker";
 import ElementsWithControls from "../elements/elementsWithControls";
+import { cn } from "@/lib/utils";
 
 interface ImageCanvasProps {
   image: HTMLImageElement | null;
@@ -17,6 +18,7 @@ interface ImageCanvasProps {
 const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
   const { nodeStyle, scaleStyle, imageStyle, canvasTexts, imageSrc } = useImageCanvas(image);
   const { elements } = useSelector((state: RootState) => state.editor);
+  const { shadowSettings } = useSelector((state: RootState) => state.editor);
 
   const [isResizable, setIsResizable] = useState(false);
   const dispatch = useDispatch();
@@ -30,44 +32,53 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
       <div 
-        className="transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]"
-        style={{
-          ...scaleStyle,
-          filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15))',
-        }}
+        className={cn(
+          "transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]",
+          shadowSettings.enabled ? "" : "hover:rotate-[0.5deg]"
+        )}
+        style={scaleStyle}
       >
         <div 
-          className="my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl" 
-          style={{
-            ...nodeStyle,
-            boxShadow: `
-              0 10px 30px -5px rgba(0, 0, 0, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-              0 0 30px rgba(255, 255, 255, 0.05) inset
-            `,
-          }} 
+          className={cn(
+            "my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl",
+            shadowSettings.enabled ? "" : "hover:translate-y-[-2px]"
+          )}
+          style={nodeStyle}
           ref={containerRef}
         >
-          <ImageWithControls
-            src={imageSrc ?? ''}
-            id={0}
-            handleRemove={handleRemove}
-            keepRatio={true}
-            style={{
-              ...imageStyle,
-              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12)) brightness(1.02) contrast(1.02)',
-            }}
-            imagePlaceCenter={true}
-            showControl={false}
-          />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none rounded-xl" />
+
+          <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
+            <ImageWithControls
+              src={imageSrc ?? ''}
+              id={0}
+              handleRemove={handleRemove}
+              keepRatio={true}
+              style={{
+                ...imageStyle,
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
+              imagePlaceCenter={true}
+              showControl={false}
+            />
+
+            {shadowSettings.enabled && (
+              <div 
+                className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent 
+                  pointer-events-none opacity-50 rounded-xl"
+                style={{
+                  transform: 'translateZ(-1px)',
+                  filter: 'blur(2px)',
+                }}
+              />
+            )}
+          </div>
+
           {!imageSrc && (
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm">
               <ImagePicker />
             </div>
           )}
-          
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 pointer-events-none" />
 
           {canvasTexts.map((property: any, index: number) => (
             <DraggableText key={index} property={property} />

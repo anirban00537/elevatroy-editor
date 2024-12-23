@@ -49,6 +49,16 @@ export type EditorSlice = {
   };
 
   TextEditingProperty: any;
+  shadowSettings: {
+    offsetX: number;
+    offsetY: number;
+    blur: number;
+    spread: number;
+    color: string;
+    opacity: number;
+    inset: boolean;
+    enabled: boolean;
+  };
 };
 
 const initialState: EditorSlice = {
@@ -112,6 +122,16 @@ const initialState: EditorSlice = {
   canvasTexts: [],
   elements: [],
   TextEditingProperty: null,
+  shadowSettings: {
+    offsetX: 0,
+    offsetY: 10,
+    blur: 20,
+    spread: 0,
+    color: "#000000",
+    opacity: 0.3,
+    inset: false,
+    enabled: true,
+  },
 };
 
 export const editorSlice = createSlice({
@@ -265,6 +285,9 @@ export const editorSlice = createSlice({
     setFrameInfo: (state, action: PayloadAction<any>) => {
       state.frame = action.payload;
     },
+    setShadowSettings: (state, action: PayloadAction<Partial<EditorSlice["shadowSettings"]>>) => {
+      state.shadowSettings = { ...state.shadowSettings, ...action.payload };
+    },
   },
 });
 
@@ -310,5 +333,6 @@ export const {
   setBackgroundImage,
   setActiveTab,
   setFrameInfo,
+  setShadowSettings,
 } = editorSlice.actions;
 export default editorSlice.reducer;
