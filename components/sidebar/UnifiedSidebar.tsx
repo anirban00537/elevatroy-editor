@@ -12,6 +12,7 @@ import {
   Move,
   Github,
   Cloud,
+  Type,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
@@ -26,6 +27,7 @@ import { cn } from "@/lib/utils";
 import type { ColorPalette } from "@/types";
 import ControlSection from "../sidebar/controlSection";
 import ShadowControls from "../controls/ShadowControls";
+import TextControls from "../controls/TextControls";
 
 interface UnifiedSidebarProps {
   handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -146,6 +148,12 @@ const sections = [
     title: "Shadows",
     icon: Cloud,
     Component: () => <ShadowControls />,
+  },
+  {
+    id: "text",
+    title: "Text",
+    icon: Type,
+    Component: () => <TextControls />,
   },
 ];
 

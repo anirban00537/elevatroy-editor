@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { nanoid } from 'nanoid';
+
 export type TextProperties = {
   value: string;
   fontSize: number;
@@ -8,6 +10,36 @@ export type TextProperties = {
   textDecoration: string;
   fontFamily: string;
 };
+
+export type TextStyle = {
+  id: string;
+  text: string;
+  fontSize: number;
+  fontFamily: string;
+  fontWeight: string | number;
+  color: string;
+  backgroundColor: string;
+  opacity: number;
+  letterSpacing: number;
+  lineHeight: number;
+  textAlign: 'left' | 'center' | 'right';
+  textDecoration: 'none' | 'underline' | 'line-through';
+  fontStyle: 'normal' | 'italic';
+  textShadow: {
+    enabled: boolean;
+    offsetX: number;
+    offsetY: number;
+    blur: number;
+    color: string;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+  rotation: number;
+  zIndex: number;
+};
+
 export type EditorSlice = {
   colors: {
     backgroundColor: string;
@@ -59,6 +91,31 @@ export type EditorSlice = {
     inset: boolean;
     enabled: boolean;
   };
+
+  textElements: TextStyle[];
+  activeTextId: string | null;
+  textDefaults: {
+    fontSize: number;
+    fontFamily: string;
+    fontWeight: string;
+    color: string;
+    backgroundColor: string;
+    opacity: number;
+    letterSpacing: number;
+    lineHeight: number;
+    textAlign: 'left' | 'center' | 'right';
+    textDecoration: 'none' | 'underline' | 'line-through';
+    fontStyle: 'normal' | 'italic';
+    textShadow: {
+      enabled: boolean;
+      offsetX: number;
+      offsetY: number;
+      blur: number;
+      color: string;
+    };
+  };
+
+  selectedTexts: string[];
 };
 
 const initialState: EditorSlice = {
@@ -67,11 +124,12 @@ const initialState: EditorSlice = {
     gradientColors: [
       { id: 1, color: "#1E40AF" },
       { id: 2, color: "#7C3AED" },
-      { id: 3, color: "#DB2777" }
+      { id: 3, color: "#DB2777" },
     ],
     backgroundType: "gradient",
     gradientDirection: "165deg",
-    backgroundImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop",
   },
   frame: {
     frameId: 0,
@@ -132,6 +190,29 @@ const initialState: EditorSlice = {
     inset: false,
     enabled: true,
   },
+  textElements: [],
+  activeTextId: null,
+  textDefaults: {
+    fontSize: 24,
+    fontFamily: 'Inter',
+    fontWeight: 'normal',
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+    opacity: 1,
+    letterSpacing: 0,
+    lineHeight: 1.5,
+    textAlign: 'left' as const,
+    textDecoration: 'none' as const,
+    fontStyle: 'normal' as const,
+    textShadow: {
+      enabled: false,
+      offsetX: 2,
+      offsetY: 2,
+      blur: 4,
+      color: 'rgba(0,0,0,0.5)',
+    },
+  },
+  selectedTexts: [],
 };
 
 export const editorSlice = createSlice({
@@ -169,7 +250,7 @@ export const editorSlice = createSlice({
     setGridOverlay: (state, action: PayloadAction<boolean>) => {
       state.gridOverlay = action.payload;
     },
-   
+
     setImageShadow: (state, action: PayloadAction<number>) => {
       state.imageShadow = action.payload;
     },
@@ -285,8 +366,115 @@ export const editorSlice = createSlice({
     setFrameInfo: (state, action: PayloadAction<any>) => {
       state.frame = action.payload;
     },
-    setShadowSettings: (state, action: PayloadAction<Partial<EditorSlice["shadowSettings"]>>) => {
+    setShadowSettings: (
+      state,
+      action: PayloadAction<Partial<EditorSlice["shadowSettings"]>>
+    ) => {
       state.shadowSettings = { ...state.shadowSettings, ...action.payload };
+    },
+    addTextElement: (state, action: PayloadAction<Partial<TextStyle>>) => {
+      const id = nanoid();
+      state.textElements.push({
+        ...state.textDefaults,
+        ...action.payload,
+        id,
+        text: action.payload.text || 'Double click to edit',
+        position: { x: 50, y: 50 },
+        rotation: 0,
+        zIndex: state.textElements.length,
+      });
+      state.activeTextId = id;
+    },
+
+    updateTextElement: (state, action: PayloadAction<{ id: string; updates: Partial<TextStyle> }>) => {
+      const index = state.textElements.findIndex(el => el.id === action.payload.id);
+      if (index !== -1) {
+        state.textElements[index] = {
+          ...state.textElements[index],
+          ...action.payload.updates,
+        };
+      }
+    },
+
+    setActiveText: (state, action: PayloadAction<string | null>) => {
+      state.activeTextId = action.payload;
+    },
+
+    deleteTextElement: (state, action: PayloadAction<string>) => {
+      state.textElements = state.textElements.filter(el => el.id !== action.payload);
+      if (state.activeTextId === action.payload) {
+        state.activeTextId = null;
+      }
+    },
+
+    updateTextPosition: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
+      const text = state.textElements.find(el => el.id === action.payload.id);
+      if (text) {
+        text.position = { x: action.payload.x, y: action.payload.y };
+      }
+    },
+
+    updateTextRotation: (state, action: PayloadAction<{ id: string; rotation: number }>) => {
+      const text = state.textElements.find(el => el.id === action.payload.id);
+      if (text) {
+        text.rotation = action.payload.rotation;
+      }
+    },
+
+    updateTextZIndex: (state, action: PayloadAction<{ id: string; zIndex: number }>) => {
+      const text = state.textElements.find(el => el.id === action.payload.id);
+      if (text) {
+        text.zIndex = action.payload.zIndex;
+      }
+    },
+
+    duplicateTextElement: (state, action: PayloadAction<string>) => {
+      const textToDuplicate = state.textElements.find(el => el.id === action.payload);
+      if (textToDuplicate) {
+        const id = nanoid();
+        state.textElements.push({
+          ...textToDuplicate,
+          id,
+          position: {
+            x: textToDuplicate.position.x + 20,
+            y: textToDuplicate.position.y + 20,
+          },
+          zIndex: state.textElements.length,
+        });
+        state.activeTextId = id;
+      }
+    },
+
+    updateTextDefaults: (state, action: PayloadAction<Partial<EditorSlice["textDefaults"]>>) => {
+      state.textDefaults = {
+        ...state.textDefaults,
+        ...action.payload,
+      };
+    },
+
+    reorderTextElements: (state, action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>) => {
+      const [removed] = state.textElements.splice(action.payload.sourceIndex, 1);
+      state.textElements.splice(action.payload.destinationIndex, 0, removed);
+      // Update zIndex after reordering
+      state.textElements.forEach((text, index) => {
+        text.zIndex = index;
+      });
+    },
+
+    updateMultipleTextElements: (state, action: PayloadAction<{ ids: string[]; updates: Partial<TextStyle> }>) => {
+      action.payload.ids.forEach(id => {
+        const index = state.textElements.findIndex(el => el.id === id);
+        if (index !== -1) {
+          state.textElements[index] = {
+            ...state.textElements[index],
+            ...action.payload.updates,
+          };
+        }
+      });
+    },
+
+    setSelectedTexts: (state, action: PayloadAction<string[]>) => {
+      state.selectedTexts = action.payload;
     },
   },
 });
@@ -334,5 +522,17 @@ export const {
   setActiveTab,
   setFrameInfo,
   setShadowSettings,
+  addTextElement,
+  updateTextElement,
+  setActiveText,
+  deleteTextElement,
+  updateTextPosition,
+  updateTextRotation,
+  updateTextZIndex,
+  duplicateTextElement,
+  updateTextDefaults,
+  reorderTextElements,
+  updateMultipleTextElements,
+  setSelectedTexts,
 } = editorSlice.actions;
 export default editorSlice.reducer;

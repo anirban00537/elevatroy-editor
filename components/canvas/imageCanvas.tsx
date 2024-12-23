@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DraggableText from "../draggable/draggableText";
 import { useImageCanvas } from "@/hooks/useScreenshotEditor";
 import Draggable from "react-draggable";
@@ -9,6 +9,8 @@ import { removeElement } from "@/store/slice/editor.slice";
 import ImagePicker from "../imagePicker";
 import ElementsWithControls from "../elements/elementsWithControls";
 import { cn } from "@/lib/utils";
+import TextEditor from '../text/TextEditor';
+import { setSelectedTexts, setActiveText } from "@/store/slice/editor.slice";
 
 interface ImageCanvasProps {
   image: HTMLImageElement | null;
@@ -19,6 +21,8 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
   const { nodeStyle, scaleStyle, imageStyle, canvasTexts, imageSrc } = useImageCanvas(image);
   const { elements } = useSelector((state: RootState) => state.editor);
   const { shadowSettings } = useSelector((state: RootState) => state.editor);
+  const textElements = useSelector((state: RootState) => state.editor.textElements);
+  const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
 
   const [isResizable, setIsResizable] = useState(false);
   const dispatch = useDispatch();
@@ -29,26 +33,48 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
     dispatch(removeElement(id));
   };
 
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const isInsideCanvas = canvasRef.current?.contains(event.target as Node);
+      
+      if (!isInsideCanvas || event.target === canvasRef.current) {
+        dispatch(setSelectedTexts([]));
+        dispatch(setActiveText(null));
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dispatch]);
+
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+    <div 
+      ref={canvasRef}
+      className="relative w-full h-full flex items-center justify-center overflow-hidden"
+    >
       <div 
         className={cn(
-          "transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]",
+          "relative transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]",
           shadowSettings.enabled ? "" : "hover:rotate-[0.5deg]"
         )}
         style={scaleStyle}
       >
         <div 
+          ref={containerRef}
           className={cn(
             "my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl",
             shadowSettings.enabled ? "" : "hover:translate-y-[-2px]"
           )}
           style={nodeStyle}
-          ref={containerRef}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none rounded-xl" />
-
-          <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
+          <div 
+            className="relative w-full h-full" 
+            style={{ transformStyle: 'preserve-3d' }}
+          >
             <ImageWithControls
               src={imageSrc ?? ''}
               id={0}
@@ -91,6 +117,13 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
               handleRemove={handleRemove}
               keepRatio={false}
               imagePlaceCenter={true}
+            />
+          ))}
+          {textElements.map((textElement) => (
+            <TextEditor
+              key={textElement.id}
+              textElement={textElement}
+              selectedTexts={selectedTexts}
             />
           ))}
         </div>
