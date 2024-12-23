@@ -53,12 +53,15 @@ export type EditorSlice = {
 
 const initialState: EditorSlice = {
   colors: {
-    backgroundColor: "#33A1FF",
-    gradientColors: [],
+    backgroundColor: "#1E40AF",
+    gradientColors: [
+      { id: 1, color: "#1E40AF" },
+      { id: 2, color: "#7C3AED" },
+      { id: 3, color: "#DB2777" }
+    ],
     backgroundType: "gradient",
-    gradientDirection: "to bottom left",
-    backgroundImage:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    gradientDirection: "165deg",
+    backgroundImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop",
   },
   frame: {
     frameId: 0,
@@ -66,7 +69,7 @@ const initialState: EditorSlice = {
   },
   activeTab: "image",
   threeD: {
-    perspective: 1000,
+    perspective: 1500,
     rotateX: 0,
     rotateY: 0,
     rotateZ: 0,
@@ -74,15 +77,15 @@ const initialState: EditorSlice = {
   translateX: 0,
   translateY: 0,
   image: null,
-  imageShadow: 4,
+  imageShadow: 12,
   width: 1280,
   height: 720,
   scale: 1,
-  imageScale: 1,
-  contentScale: 0.8,
+  imageScale: 1.03,
+  contentScale: 0.88,
   gridOverlay: false,
-  imageRadius: 10,
-  canvasRadius: 0,
+  imageRadius: 16,
+  canvasRadius: 20,
   fixedTextProperties: {
     status: false,
     direction: "column",

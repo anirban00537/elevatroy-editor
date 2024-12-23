@@ -341,26 +341,40 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     borderRadius: `${canvasRadius}px`,
+    border: '1px solid rgba(255, 255, 255, 0.12)',
+    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: 'blur(12px)',
   };
+
   const scaleStyle: React.CSSProperties = {
     transform: `scale(${scale})`,
     transformOrigin: "50% center",
     marginTop: "10px",
-    willChange: "transform",
-    imageRendering: "pixelated",
+    willChange: "transform, filter",
+    imageRendering: "auto",
+    filter: 'drop-shadow(0 30px 60px rgba(0, 0, 0, 0.25))',
+  };
+
+  const imageStyle: React.CSSProperties = {
+    cursor: "grab",
+    transform: `
+      perspective(${threeD.perspective}px) 
+      rotateX(${threeD.rotateX}deg) 
+      rotateY(${threeD.rotateY}deg) 
+      rotateZ(${threeD.rotateZ}deg) 
+      scale(${imageScale})
+    `,
+    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    position: "relative",
+    filter: 'contrast(1.03) saturate(1.05) brightness(1.02)',
+    WebkitFontSmoothing: 'antialiased',
   };
 
   return {
     nodeStyle,
     imageSrc: image?.src,
     scaleStyle,
-    imageStyle: {
-      // borderRadius: `${imageRadius}px`,
-      cursor: "grab",
-      transform: `perspective(${threeD.perspective}px) rotateX(${threeD.rotateX}deg) rotateY(${threeD.rotateY}deg) rotateZ(${threeD.rotateZ}deg) scale(${imageScale})`,
-      transition: "all 0.5s ease-out 0s",
-      position: "relative",
-    },
+    imageStyle,
     canvasTexts,
   };
 };
