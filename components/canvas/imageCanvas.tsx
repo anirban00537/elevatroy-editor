@@ -15,8 +15,7 @@ interface ImageCanvasProps {
 }
 
 const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
-  const { nodeStyle, imageSrc, scaleStyle, imageStyle, canvasTexts } =
-    useImageCanvas(image);
+  const { nodeStyle, scaleStyle, imageStyle, canvasTexts, imageSrc } = useImageCanvas(image);
   const { elements } = useSelector((state: RootState) => state.editor);
 
   const [isResizable, setIsResizable] = useState(false);
@@ -30,15 +29,17 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-      <div className="transform-gpu" style={scaleStyle}>
+      <div 
+        className="transform-gpu transition-transform duration-200 ease-out"
+        style={scaleStyle}
+      >
         <div 
           className="my-node relative bg-dark-200 rounded-xl shadow-2xl" 
           style={nodeStyle} 
           ref={containerRef}
         >
           <ImageWithControls
-            // @ts-ignore
-            src={imageSrc}
+            src={imageSrc ?? ''}
             id={0}
             handleRemove={handleRemove}
             keepRatio={true}
@@ -47,7 +48,7 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, containerRef }) => {
             showControl={false}
           />
           {!imageSrc && (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute inset-0 flex items-center justify-center">
               <ImagePicker />
             </div>
           )}

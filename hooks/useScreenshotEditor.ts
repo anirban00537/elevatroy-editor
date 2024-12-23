@@ -257,29 +257,26 @@ export const useColors = () => {
   };
 };
 const calculateScale = (width: number, height: number) => {
-  let newScale = 1;
+  // Get viewport dimensions with padding
+  const viewportWidth = window.innerWidth - 380; // 320px sidebar + 60px padding
+  const viewportHeight = window.innerHeight - 100; // 100px padding
 
-  newScale = Math.min(newScale, 1100 / Math.max(width, 1));
-  newScale = Math.min(newScale, 600 / Math.max(height, 1));
+  // Calculate scale ratios for both dimensions
+  const scaleX = viewportWidth / width;
+  const scaleY = viewportHeight / height;
 
-  const screenWidth = window.innerWidth - 350;
-  if (screenWidth < 1487) {
-    newScale *= 0.7;
-  }
-  if (screenWidth < 1233) {
-    newScale *= 0.6;
-  }
-  if (screenWidth < 500) {
-    newScale *= 0.65;
-  }
+  // Use the smaller scale to ensure image fits both dimensions
+  let scale = Math.min(scaleX, scaleY);
 
-  // Calculate the minimum scale based on window dimensions
-  const minScale = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+  // Add breakpoints for different screen sizes
+  if (viewportWidth < 1600) scale *= 0.9;  // Large screens
+  if (viewportWidth < 1200) scale *= 0.85; // Medium screens
+  if (viewportWidth < 900) scale *= 0.8;   // Small screens
 
-  // Apply the minimum scale
-  newScale = Math.min(newScale, minScale);
+  // Ensure minimum and maximum scale
+  scale = Math.max(0.1, Math.min(scale, 1.5));
 
-  return newScale;
+  return scale;
 };
 
 // Function to use the Image Canvas
@@ -303,24 +300,14 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
 
   useEffect(() => {
     const updateScale = () => {
-      dispatch(setScale(calculateScale(width, height)));
+      const newScale = calculateScale(width, height);
+      dispatch(setScale(newScale));
     };
 
     updateScale();
-  }, [width, height]);
-  useEffect(() => {
-    const updateScale = () => {
-      dispatch(setScale(calculateScale(width, height)));
-    };
-
-    updateScale();
-
-    window.addEventListener("resize", updateScale);
-
-    return () => {
-      window.removeEventListener("resize", updateScale);
-    };
-  }, [width, height]);
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [width, height, dispatch]);
 
   const backgroundImage =
     gridOverlay && backgroundType === "gradient"
@@ -366,9 +353,7 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
   return {
     nodeStyle,
     imageSrc: image?.src,
-    gridOverlay,
-    canvasTexts,
-    scaleStyle: scaleStyle,
+    scaleStyle,
     imageStyle: {
       // borderRadius: `${imageRadius}px`,
       cursor: "grab",
@@ -376,6 +361,7 @@ export const useImageCanvas = (image: HTMLImageElement | null) => {
       transition: "all 0.5s ease-out 0s",
       position: "relative",
     },
+    canvasTexts,
   };
 };
 export const useCodeCanvas = () => {
