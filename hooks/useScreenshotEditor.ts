@@ -544,9 +544,9 @@ export const useImageSection = () => {
     [dispatch]
   );
 
-  const setGridOverlayState = (status: boolean) => {
-    dispatch(setGridOverlay(status));
-  };
+  const setGridOverlayState = useCallback((value: boolean) => {
+    dispatch(setGridOverlay(value));
+  }, [dispatch]);
 
   const handleCanvasRadiusChange = useCallback(
     (value: number) => {

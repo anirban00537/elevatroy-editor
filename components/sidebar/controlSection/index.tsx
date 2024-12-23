@@ -1,5 +1,6 @@
 import React from "react";
 import { MoveDown, MoveLeft, MoveRight, MoveUp } from "lucide-react";
+import { cn } from "../../../lib/utils";
 
 interface ControlSectionProps {
   threeD: any;
@@ -45,33 +46,61 @@ const ControlSection: React.FC<ControlSectionProps> = ({
         <div className="flex items-center justify-center gap-2">
           <button
             onClick={handleRotateLeft}
-            className="p-2 bg-dark-300 hover:bg-dark-400 rounded-md 
-              text-zinc-400 transition-colors"
+            className={cn(
+              "p-2.5 rounded-md transition-all duration-200",
+              "border border-zinc-700/50",
+              "shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
+              "bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-600",
+              "hover:from-zinc-500 hover:via-zinc-400 hover:to-zinc-500",
+              "hover:scale-105 active:scale-95",
+              "group"
+            )}
           >
-            <MoveLeft size={16} />
+            <MoveLeft size={16} className="text-zinc-300 group-hover:text-white transition-colors" />
           </button>
           <div className="flex flex-col gap-2">
             <button
               onClick={handleRotateUp}
-              className="p-2 bg-dark-300 hover:bg-dark-400 rounded-md 
-                text-zinc-400 transition-colors"
+              className={cn(
+                "p-2.5 rounded-md transition-all duration-200",
+                "border border-zinc-700/50",
+                "shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
+                "bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-600",
+                "hover:from-zinc-500 hover:via-zinc-400 hover:to-zinc-500",
+                "hover:scale-105 active:scale-95",
+                "group"
+              )}
             >
-              <MoveUp size={16} />
+              <MoveUp size={16} className="text-zinc-300 group-hover:text-white transition-colors" />
             </button>
             <button
               onClick={handleRotateDown}
-              className="p-2 bg-dark-300 hover:bg-dark-400 rounded-md 
-                text-zinc-400 transition-colors"
+              className={cn(
+                "p-2.5 rounded-md transition-all duration-200",
+                "border border-zinc-700/50",
+                "shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
+                "bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-600",
+                "hover:from-zinc-500 hover:via-zinc-400 hover:to-zinc-500",
+                "hover:scale-105 active:scale-95",
+                "group"
+              )}
             >
-              <MoveDown size={16} />
+              <MoveDown size={16} className="text-zinc-300 group-hover:text-white transition-colors" />
             </button>
           </div>
           <button
             onClick={handleRotateRight}
-            className="p-2 bg-dark-300 hover:bg-dark-400 rounded-md 
-              text-zinc-400 transition-colors"
+            className={cn(
+              "p-2.5 rounded-md transition-all duration-200",
+              "border border-zinc-700/50",
+              "shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
+              "bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-600",
+              "hover:from-zinc-500 hover:via-zinc-400 hover:to-zinc-500",
+              "hover:scale-105 active:scale-95",
+              "group"
+            )}
           >
-            <MoveRight size={16} />
+            <MoveRight size={16} className="text-zinc-300 group-hover:text-white transition-colors" />
           </button>
         </div>
       </div>
@@ -79,7 +108,7 @@ const ControlSection: React.FC<ControlSectionProps> = ({
       {/* Position Controls */}
       <div>
         <h4 className="text-xs text-zinc-400 mb-3">Image Position</h4>
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-1.5">
           {positionGrid.map((position, index) => (
             <button
               key={index}
@@ -87,16 +116,21 @@ const ControlSection: React.FC<ControlSectionProps> = ({
                 handleTranslateX(position.translateX);
                 handleTranslateY(position.translateY);
               }}
-              className={`aspect-square rounded-md transition-all ${
+              className={cn(
+                "aspect-square rounded-md transition-all duration-200",
+                "border border-zinc-700/50",
+                "shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
                 translateX === position.translateX && translateY === position.translateY
-                  ? "bg-accent text-white"
-                  : "bg-dark-300 hover:bg-dark-400 text-zinc-400"
-              }`}
+                  ? "bg-gradient-to-b from-accent/90 via-accent to-accent/90 shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+                  : "bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-600 hover:from-zinc-500 hover:via-zinc-400 hover:to-zinc-500",
+                "hover:scale-105 active:scale-95"
+              )}
             />
           ))}
         </div>
       </div>
     </div>
+    
   );
 };
 

@@ -320,7 +320,9 @@ const UnifiedSidebar = ({
                             </span>
                             <Switch
                               checked={gridOverlay}
-                              onChange={() => setGridOverlayState(!gridOverlay)}
+                              onCheckedChange={(checked) => {
+                                setGridOverlayState(checked);
+                              }}
                             />
                           </div>
                         </div>
@@ -360,25 +362,38 @@ const UnifiedSidebar = ({
         </AnimatePresence>
       </div>
 
-      {/* Fixed bottom buttons with gradient borders */}
+      {/* Fixed bottom buttons with deeper silver gradients */}
       <div className="fixed bottom-0 left-0 w-[320px] p-4 bg-[#0D0D12] border-t border-white/10">
         <div className="flex gap-2">
+          {/* Download Button - Deep Silver */}
           <button
             onClick={() => handleExport(width, height)}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
-              bg-accent hover:bg-accent-hover rounded-md cursor-pointer 
-              text-sm text-white transition-colors"
+              bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500
+              hover:from-zinc-200 hover:via-zinc-300 hover:to-zinc-400
+              border border-zinc-600/50 rounded-md cursor-pointer 
+              text-sm text-zinc-800 font-medium transition-all duration-200
+              shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.9)]
+              hover:shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.9)]
+              hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <Download size={16} />
+            <Download size={16} className="text-zinc-700 group-hover:text-zinc-900" />
             Download
           </button>
+
+          {/* Copy Button - Darker Silver */}
           <button
             onClick={handleCopyImageToClipboard}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 
-              bg-dark-200 hover:bg-dark-300 rounded-md cursor-pointer 
-              text-sm text-zinc-400 transition-colors border border-dark-border"
+              bg-gradient-to-b from-zinc-800 via-zinc-700 to-zinc-900
+              hover:from-zinc-700 hover:via-zinc-600 hover:to-zinc-800
+              border border-zinc-900/90 rounded-md cursor-pointer 
+              text-sm text-zinc-300 font-medium transition-all duration-200
+              shadow-[0_2px_4px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)]
+              hover:shadow-[0_4px_8px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)]
+              hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <Copy size={16} />
+            <Copy size={16} className="text-zinc-400 group-hover:text-zinc-200" />
             Copy
           </button>
         </div>
