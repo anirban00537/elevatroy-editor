@@ -9,7 +9,6 @@ import { removeElement } from "@/store/slice/editor.slice";
 import ImagePicker from "../imagePicker";
 import ElementsWithControls from "../elements/elementsWithControls";
 import { cn } from "@/lib/utils";
-import TextEditor from '../text/TextEditor';
 import { setSelectedTexts, setActiveText } from "@/store/slice/editor.slice";
 
 interface ImageCanvasProps {
@@ -119,10 +118,23 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
             />
           ))}
           {textElements.map((textElement) => (
-            <TextEditor
+            <DraggableText
               key={textElement.id}
-              textElement={textElement}
-              selectedTexts={selectedTexts}
+              property={{
+                ...textElement,
+                x: textElement.position.x,
+                y: textElement.position.y,
+                id: textElement.id,
+                text: textElement.text,
+                fontSize: textElement.fontSize,
+                fontFamily: textElement.fontFamily,
+                fontWeight: textElement.fontWeight,
+                color: textElement.color,
+                textDecoration: textElement.textDecoration,
+                fontStyle: textElement.fontStyle,
+                width: textElement.width,
+                height: textElement.height
+              }}
             />
           ))}
         </div>

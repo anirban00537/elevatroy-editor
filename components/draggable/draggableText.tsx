@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Rnd } from "react-rnd";
 import {
   setActiveTab,
   setTextEditing,
   updateTextById,
+  setActiveText,
+  setSelectedTexts,
 } from "@/store/slice/editor.slice";
+import { RootState } from "@/store";
 
 interface DraggableTextProps {
   property: any;
@@ -13,6 +16,7 @@ interface DraggableTextProps {
 
 const DraggableText: React.FC<DraggableTextProps> = ({ property }: any) => {
   const dispatch = useDispatch();
+  const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
   const [isControlsVisible, setIsControlsVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
 
@@ -64,8 +68,27 @@ const DraggableText: React.FC<DraggableTextProps> = ({ property }: any) => {
     dispatch(setActiveTab("draggableText"));
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (e.shiftKey) {
+      // Multi-select with shift
+      if (selectedTexts.includes(property.id)) {
+        dispatch(setSelectedTexts(selectedTexts.filter(id => id !== property.id)));
+      } else {
+        dispatch(setSelectedTexts([...selectedTexts, property.id]));
+      }
+    } else {
+      // Single select
+      dispatch(setActiveText(property.id));
+      dispatch(setSelectedTexts([property.id]));
+    }
+    
+    setIsControlsVisible(true);
+  };
+
   return (
-    <div onClick={handleContainerClick} tabIndex={0} ref={targetRef}>
+    <div onClick={handleClick} tabIndex={0} ref={targetRef}>
       <Rnd
         onClick={handleContainerClick}
         default={{
@@ -86,7 +109,7 @@ const DraggableText: React.FC<DraggableTextProps> = ({ property }: any) => {
           fontWeight: property.fontWeight,
           background: "transparent",
           cursor: isControlsVisible ? "move" : "default",
-          border: isControlsVisible ? "2px solid #ffffff52" : "none", // Border style on selection
+          border: selectedTexts.includes(property.id) ? "2px solid #ffffff52" : "none",
           padding: "",
         }}
         resizeHandleComponent={{

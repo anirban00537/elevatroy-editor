@@ -38,6 +38,8 @@ export type TextStyle = {
   };
   rotation: number;
   zIndex: number;
+  width?: number;
+  height?: number;
 };
 
 export type EditorSlice = {
