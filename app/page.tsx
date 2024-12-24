@@ -17,7 +17,7 @@ import { X, Menu } from "lucide-react";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+
   const {
     handleExport,
     handlePaste,
