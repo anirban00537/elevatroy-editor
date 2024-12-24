@@ -1,6 +1,14 @@
 import React from "react";
+import posthog from "@/lib/posthog";
 
 const DevelopmentContact = () => {
+  const handleContactClick = () => {
+    posthog.capture("contact_button_clicked", {
+      location: "bottom_bar",
+      type: "linkedin_contact",
+    });
+  };
+
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-auto">
       <div className="flex items-center gap-3 px-4 py-2 bg-dark-300 rounded-full border border-dark-100 shadow-lg animate-glow">
@@ -17,6 +25,7 @@ const DevelopmentContact = () => {
             href="https://www.linkedin.com/in/anirban00537/"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleContactClick}
             className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full transition-colors flex items-center gap-1"
           >
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
