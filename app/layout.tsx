@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layout";
+import Script from "next/script";
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const poppins = Poppins({
   weight: ["400", "700"],
@@ -10,7 +13,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Shots - Beautiful Screenshot Editor by Elevatroy",
-  description: "Transform your screenshots into stunning visuals with Shots, a free tool by Elevatroy - Your trusted SaaS & Web Development agency. Create professional-looking screenshots for your documentation, presentations, or social media posts.",
+  description:
+    "Transform your screenshots into stunning visuals with Shots, a free tool by Elevatroy - Your trusted SaaS & Web Development agency. Create professional-looking screenshots for your documentation, presentations, or social media posts.",
   applicationName: "Shots by Elevatroy",
   keywords: [
     // Product Keywords
@@ -37,13 +41,13 @@ export const metadata: Metadata = {
     "SaaS development",
     "web development agency",
     "free developer tools",
-    "software development company"
+    "software development company",
   ].join(", "),
   authors: [
     {
       name: "Elevatroy",
       url: "https://elevatroy.com",
-    }
+    },
   ],
   creator: "Elevatroy",
   publisher: "Elevatroy",
@@ -53,7 +57,8 @@ export const metadata: Metadata = {
     url: "https://shots.elevatroy.com",
     siteName: "Shots by Elevatroy",
     title: "Shots - Beautiful Screenshot Editor by Elevatroy",
-    description: "Free screenshot beautifier tool by Elevatroy, your trusted SaaS & Web Development partner. Transform your screenshots into professional visuals.",
+    description:
+      "Free screenshot beautifier tool by Elevatroy, your trusted SaaS & Web Development partner. Transform your screenshots into professional visuals.",
     images: [
       {
         url: "/og-image.png", // Add your OG image
@@ -66,7 +71,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Shots - Beautiful Screenshot Editor by Elevatroy",
-    description: "Transform your screenshots into stunning visuals with our free tool. By Elevatroy - Your SaaS & Web Development experts.",
+    description:
+      "Transform your screenshots into stunning visuals with our free tool. By Elevatroy - Your SaaS & Web Development experts.",
     images: ["/twitter-image.png"], // Add your Twitter card image
     creator: "@elevatroy",
     site: "@elevatroy",
@@ -92,6 +98,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}');
+            `,
+          }}
+        />
+      </head>
       <body className={`${poppins.className} `}>
         <Layout>{children}</Layout>
       </body>

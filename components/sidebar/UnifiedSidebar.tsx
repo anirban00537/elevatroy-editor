@@ -32,7 +32,7 @@ import type { ColorPalette } from "@/types";
 import ControlSection from "../sidebar/controlSection";
 import ShadowControls from "../controls/ShadowControls";
 import TextControls from "../controls/TextControls";
-import posthog from "@/lib/posthog";
+import { event } from "@/lib/analytics";
 
 interface UnifiedSidebarProps {
   handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -226,9 +226,12 @@ const UnifiedSidebar = ({
   };
 
   const handlePurchaseClick = () => {
-    posthog.capture("purchase_button_clicked", {
-      location: "sidebar_header",
-      type: "linkedin_purchase",
+    event({
+      action: "purchase_click",
+      params: {
+        category: "engagement",
+        label: "sidebar_linkedin",
+      },
     });
   };
 

@@ -1,11 +1,14 @@
 import React from "react";
-import posthog from "@/lib/posthog";
+import { event } from "@/lib/analytics";
 
 const DevelopmentContact = () => {
   const handleContactClick = () => {
-    posthog.capture("contact_button_clicked", {
-      location: "bottom_bar",
-      type: "linkedin_contact",
+    event({
+      action: "contact_click",
+      params: {
+        category: "engagement",
+        label: "bottom_bar_linkedin",
+      },
     });
   };
 
