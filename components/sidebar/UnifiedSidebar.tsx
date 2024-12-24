@@ -227,38 +227,36 @@ const UnifiedSidebar = ({
   return (
     <aside
       id="sidebar"
-      className="fixed right-0 top-0 bottom-0 w-[300px] bg-dark-100 border-l 
-        border-white/5 flex flex-col overflow-hidden"
+      className="fixed right-0 top-0 bottom-0 w-full sm:w-[380px] lg:w-[300px] 
+        bg-dark-100 border-l border-white/5 flex flex-col overflow-hidden"
     >
       {/* Logo Section */}
       <div
-        className="flex-shrink-0 p-5 border-b border-white/10 
+        className="flex-shrink-0 p-4 sm:p-5 border-b border-white/10 
         bg-gradient-to-b from-dark-100/50 to-transparent"
       >
         <div className="flex flex-col">
-          {/* Logo and CTA */}
           <div className="flex items-center justify-between">
-            {/* Logo and Byline */}
             <div className="flex flex-col">
               <img
                 src="/logo.svg"
                 alt="Elevatroy"
                 height={120}
                 width={120}
-                className="w-[120px] h-auto drop-shadow-lg"
+                className="w-[100px] sm:w-[120px] h-auto drop-shadow-lg"
               />
               <a
                 href="https://elevatroy.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-zinc-500 ml-3 hover:text-zinc-400 
-                  transition-colors mt-1 tracking-wide"
+                  transition-colors mt-1 tracking-wide hidden sm:block"
               >
                 by elevatroy.com
               </a>
             </div>
 
-            {/* Contact Button */}
+            {/* Purchase Button */}
             <div className="relative group">
               <div
                 className="absolute -inset-0.5 bg-gradient-to-r from-accent/20 
