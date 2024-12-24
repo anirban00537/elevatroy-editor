@@ -9,8 +9,9 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { motion, AnimatePresence } from "framer-motion";
-import { useDispatch } from 'react-redux';
-import { setImage } from '@/store/slice/editor.slice';
+import { useDispatch } from "react-redux";
+import { setImage } from "@/store/slice/editor.slice";
+import DevelopmentContact from "@/components/contact/DevelopmentContact";
 
 export default function Home() {
   const {
@@ -42,7 +43,7 @@ export default function Home() {
   }, [handlePaste]);
 
   return (
-    <main className="flex min-h-screen bg-dark-200">
+    <main className="flex min-h-screen bg-dark-200 relative">
       {/* Main Content Area */}
       <div className="flex-1 mr-[300px]">
         <div className="w-full h-screen flex items-center justify-center">
@@ -57,6 +58,8 @@ export default function Home() {
         handleCopyImageToClipboard={handleCopyImageToClipboard}
         image={image}
       />
+
+      <DevelopmentContact />
     </main>
   );
 }

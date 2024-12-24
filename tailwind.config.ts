@@ -53,16 +53,15 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         dark: {
-          DEFAULT: '#0D0D12',
-          50: '#1A1A23',
-          100: '#15151C',
-          200: '#111118',
-          300: '#1E1E28',
-          400: '#27272F',
-          border: '#2A2A35',
-          950: '#050507',
+          DEFAULT: "#0D0D12",
+          50: "#1A1A23",
+          100: "#15151C",
+          200: "#111118",
+          300: "#1E1E28",
+          400: "#27272F",
+          border: "#2A2A35",
+          950: "#050507",
         },
-       
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -86,11 +85,22 @@ const config = {
             backgroundPosition: "-200% 0",
           },
         },
+        glow: {
+          "0%, 100%": {
+            boxShadow:
+              "0 0 5px rgba(74, 158, 255, 0.2), 0 0 10px rgba(74, 158, 255, 0.1)",
+          },
+          "50%": {
+            boxShadow:
+              "0 0 20px rgba(74, 158, 255, 0.3), 0 0 30px rgba(74, 158, 255, 0.2)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
+        glow: "glow 3s ease-in-out infinite",
       },
     },
   },

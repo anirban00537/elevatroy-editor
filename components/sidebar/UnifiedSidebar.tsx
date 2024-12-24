@@ -20,7 +20,11 @@ import { Switch } from "@/components/ui/switch";
 import CanvasSize from "../canvasSize";
 import CanvasInputSize from "../canvasSize/canvasInputSize";
 import CustomSlider from "../slider/customSlider";
-import { setActiveText, setGradientDirection, setSelectedTexts } from "@/store/slice/editor.slice";
+import {
+  setActiveText,
+  setGradientDirection,
+  setSelectedTexts,
+} from "@/store/slice/editor.slice";
 import BackgroundSection from "../LeftSidebarSection";
 import { CustomTabs } from "@/components/ui/custom-tabs";
 import { cn } from "@/lib/utils";
@@ -207,16 +211,16 @@ const UnifiedSidebar = ({
   const handleExportWithDeselect = async (width: number, height: number) => {
     dispatch(setSelectedTexts([]));
     dispatch(setActiveText(null));
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
     handleExport(width, height);
   };
 
   const handleCopyWithDeselect = async () => {
     dispatch(setSelectedTexts([]));
     dispatch(setActiveText(null));
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
     handleCopyImageToClipboard();
   };
 
@@ -227,8 +231,10 @@ const UnifiedSidebar = ({
         border-white/5 flex flex-col overflow-hidden"
     >
       {/* Logo Section */}
-      <div className="flex-shrink-0 p-5 border-b border-white/10 
-        bg-gradient-to-b from-dark-100/50 to-transparent">
+      <div
+        className="flex-shrink-0 p-5 border-b border-white/10 
+        bg-gradient-to-b from-dark-100/50 to-transparent"
+      >
         <div className="flex flex-col">
           {/* Logo and CTA */}
           <div className="flex items-center justify-between">
@@ -260,14 +266,16 @@ const UnifiedSidebar = ({
                 transition duration-500"
               />
               <a
-                href="https://elevatroy.com"
+                href="https://www.linkedin.com/in/anirban00537/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="relative flex items-center gap-1.5 text-[10px] font-medium 
                   text-zinc-400 hover:text-zinc-300 bg-dark-300/80 px-3 py-2 
                   rounded-lg border border-dark-border/10 hover:bg-dark-400/80 
                   transition-all duration-300"
               >
-                <span>Contact for</span>
-                <span className="text-accent">Development</span>
+                <span>Purchase</span>
+                <span className="text-accent">this script</span>
               </a>
             </div>
           </div>
