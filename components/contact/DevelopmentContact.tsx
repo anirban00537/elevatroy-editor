@@ -19,10 +19,7 @@ const DevelopmentContact = () => {
           <span className="hidden sm:inline text-xs text-gray-400">
             Contact for SaaS Development
           </span>
-          <span className="hidden sm:inline text-gray-600 text-xs">•</span>
-          <span className="hidden sm:inline text-xs text-gray-400">
-            or Purchase this tool
-          </span>
+
           <span className="hidden sm:inline text-gray-600 text-xs">•</span>
           <a
             href="https://www.linkedin.com/in/anirban00537/"

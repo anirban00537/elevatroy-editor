@@ -247,7 +247,7 @@ const UnifiedSidebar = ({
         bg-gradient-to-b from-dark-100/50 to-transparent"
       >
         <div className="flex flex-col">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center justify-between">
             <div className="flex flex-col">
               <img
                 src="/logo.svg"
@@ -275,7 +275,7 @@ const UnifiedSidebar = ({
                 transition duration-500"
               />
               <a
-                href="https://www.linkedin.com/in/anirban00537/"
+                href="https://elevatroy.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handlePurchaseClick}
@@ -284,8 +284,7 @@ const UnifiedSidebar = ({
                   rounded-lg border border-dark-border/10 hover:bg-dark-400/80 
                   transition-all duration-300"
               >
-                <span>Purchase</span>
-                <span className="text-accent">this script</span>
+                <span className="text-accent">Contact Us For Development</span>
               </a>
             </div>
           </div>
