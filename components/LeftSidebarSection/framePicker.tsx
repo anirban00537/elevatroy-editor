@@ -21,7 +21,7 @@ const FramePicker = () => {
       title: "Glass Frame",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-[5px] border-[#ffffffc7] rounded-lg w-full h-full" />
+        <div className="border-[1px] border-white/20 rounded-xl w-full h-full bg-white/5 backdrop-blur-sm" />
       ),
     },
     {
@@ -29,7 +29,7 @@ const FramePicker = () => {
       title: "Glass Frame Dark",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-4 border-gray-600 rounded-lg bg-gray-800 w-full h-full" />
+        <div className="border-[1px] border-black/20 rounded-xl w-full h-full bg-black/20 backdrop-blur-sm" />
       ),
     },
     {
@@ -37,11 +37,11 @@ const FramePicker = () => {
       title: "Mac Window",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-4 border-gray-200 rounded-lg bg-white w-full h-full">
-          <div className="h-4 bg-gray-100 flex items-center gap-1.5 px-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+        <div className="border border-white/10 rounded-xl overflow-hidden bg-gradient-to-b from-[#ffffff08] to-[#ffffff03]">
+          <div className="h-6 bg-[#ffffff08] flex items-center gap-1.5 px-2 border-b border-white/5">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
           </div>
         </div>
       ),
@@ -51,11 +51,11 @@ const FramePicker = () => {
       title: "Mac Window Dark",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-4 border-gray-700 rounded-lg bg-gray-800 w-full h-full">
-          <div className="h-4 bg-gray-900 flex items-center gap-1.5 px-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+        <div className="border border-black/20 rounded-xl overflow-hidden bg-gradient-to-b from-[#00000040] to-[#00000020]">
+          <div className="h-6 bg-[#00000040] flex items-center gap-1.5 px-2 border-b border-black/10">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
           </div>
         </div>
       ),
@@ -65,11 +65,17 @@ const FramePicker = () => {
       title: "Windows Window",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-4 border-gray-200 rounded-lg bg-white w-full h-full">
-          <div className="h-4 bg-gray-100 flex items-center justify-end gap-2 px-2">
-            <div className="w-2.5 h-2.5 bg-gray-400" />
-            <div className="w-2.5 h-2.5 bg-gray-400" />
-            <div className="w-2.5 h-2.5 bg-red-400" />
+        <div className="border border-white/10 rounded-xl overflow-hidden bg-gradient-to-b from-[#ffffff08] to-[#ffffff03]">
+          <div className="h-6 bg-[#ffffff08] flex items-center justify-end gap-2 px-2 border-b border-white/5">
+            <div className="w-3 h-3 flex items-center justify-center text-white/60">
+              −
+            </div>
+            <div className="w-3 h-3 flex items-center justify-center text-white/60">
+              □
+            </div>
+            <div className="w-3 h-3 flex items-center justify-center text-white/60">
+              ×
+            </div>
           </div>
         </div>
       ),
@@ -79,11 +85,17 @@ const FramePicker = () => {
       title: "Windows Window Dark",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-4 border-gray-700 rounded-lg bg-gray-800 w-full h-full">
-          <div className="h-4 bg-gray-900 flex items-center justify-end gap-2 px-2">
-            <div className="w-2.5 h-2.5 bg-gray-600" />
-            <div className="w-2.5 h-2.5 bg-gray-600" />
-            <div className="w-2.5 h-2.5 bg-red-500" />
+        <div className="border border-black/20 rounded-xl overflow-hidden bg-gradient-to-b from-[#00000040] to-[#00000020]">
+          <div className="h-6 bg-[#00000040] flex items-center justify-end gap-2 px-2 border-b border-black/10">
+            <div className="w-3 h-3 flex items-center justify-center text-white/40">
+              −
+            </div>
+            <div className="w-3 h-3 flex items-center justify-center text-white/40">
+              □
+            </div>
+            <div className="w-3 h-3 flex items-center justify-center text-white/40">
+              ×
+            </div>
           </div>
         </div>
       ),
@@ -93,7 +105,9 @@ const FramePicker = () => {
       title: "Fancy Frame",
       icon: <Frame size={20} />,
       preview: (
-        <div className="border-8 border-gradient-fancy rounded-lg w-full h-full bg-gradient-to-br from-purple-500/20 to-pink-500/20" />
+        <div className="rounded-xl w-full h-full p-[1px] bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500">
+          <div className="w-full h-full rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm" />
+        </div>
       ),
     },
   ];

@@ -1,13 +1,14 @@
 import React, { ReactNode } from "react";
 
-const DarkBasicFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
+const DarkGlassFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="relative">
-      <div className="border-[25px]   shadow-md border-gray-600 rounded-lg bg-gray-800 pointer-events-none">
-        {children}
+    <div className="relative w-full h-full">
+      <div className="absolute -inset-[1px] rounded-xl">
+        <div className="absolute inset-0 border border-black/20 rounded-xl bg-black/20 backdrop-blur-sm" />
       </div>
+      <div className="relative w-full h-full">{children}</div>
     </div>
   );
 };
 
-export default DarkBasicFrame;
+export default DarkGlassFrame;
