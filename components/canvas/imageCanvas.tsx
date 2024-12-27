@@ -70,25 +70,35 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
     };
   }, [dispatch]);
 
+  // Create shadow style based on settings
+  const shadowStyle = shadowSettings.enabled
+    ? {
+        boxShadow: `${shadowSettings.inset ? "inset " : ""}${
+          shadowSettings.offsetX
+        }px ${shadowSettings.offsetY}px ${shadowSettings.blur}px ${
+          shadowSettings.spread
+        }px ${shadowSettings.color}${Math.round(shadowSettings.opacity * 255)
+          .toString(16)
+          .padStart(2, "0")}`,
+      }
+    : {};
+
   return (
     <div
       ref={canvasRef}
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
     >
       <div
-        className={cn(
-          "relative transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]",
-          shadowSettings.enabled ? "" : "hover:rotate-[0.5deg]"
-        )}
+        className="relative transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]"
         style={scaleStyle}
       >
         <div
           ref={containerRef}
-          className={cn(
-            "my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl",
-            shadowSettings.enabled ? "" : "hover:translate-y-[-2px]"
-          )}
-          style={nodeStyle}
+          className="my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl"
+          style={{
+            ...nodeStyle,
+            ...shadowStyle,
+          }}
         >
           {image ? (
             <div
@@ -109,17 +119,6 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm">
               <ImagePicker />
             </div>
-          )}
-
-          {shadowSettings.enabled && (
-            <div
-              className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent 
-                pointer-events-none opacity-50 rounded-xl"
-              style={{
-                transform: "translateZ(-1px)",
-                filter: "blur(2px)",
-              }}
-            />
           )}
 
           {canvasTexts.map((property: any, index: number) => (

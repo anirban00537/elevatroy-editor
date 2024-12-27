@@ -338,14 +338,6 @@ const UnifiedSidebar = ({
                             step={1}
                           />
                           <CustomSlider
-                            label="Shadow"
-                            value={imageShadow}
-                            onChange={handleShadowChange}
-                            min={0}
-                            max={12}
-                            step={1}
-                          />
-                          <CustomSlider
                             label="Image Size"
                             value={imageScale}
                             onChange={handleImageScale}

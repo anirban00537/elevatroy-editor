@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 export type TextProperties = {
   value: string;
@@ -22,9 +22,9 @@ export type TextStyle = {
   opacity: number;
   letterSpacing: number;
   lineHeight: number;
-  textAlign: 'left' | 'center' | 'right';
-  textDecoration: 'none' | 'underline' | 'line-through';
-  fontStyle: 'normal' | 'italic';
+  textAlign: "left" | "center" | "right";
+  textDecoration: "none" | "underline" | "line-through";
+  fontStyle: "normal" | "italic";
   textShadow: {
     enabled: boolean;
     offsetX: number;
@@ -105,9 +105,9 @@ export type EditorSlice = {
     opacity: number;
     letterSpacing: number;
     lineHeight: number;
-    textAlign: 'left' | 'center' | 'right';
-    textDecoration: 'none' | 'underline' | 'line-through';
-    fontStyle: 'normal' | 'italic';
+    textAlign: "left" | "center" | "right";
+    textDecoration: "none" | "underline" | "line-through";
+    fontStyle: "normal" | "italic";
     textShadow: {
       enabled: boolean;
       offsetX: number;
@@ -196,22 +196,22 @@ const initialState: EditorSlice = {
   activeTextId: null,
   textDefaults: {
     fontSize: 24,
-    fontFamily: 'Inter',
-    fontWeight: 'normal',
-    color: '#FFFFFF',
-    backgroundColor: 'transparent',
+    fontFamily: "Inter",
+    fontWeight: "normal",
+    color: "#FFFFFF",
+    backgroundColor: "transparent",
     opacity: 1,
     letterSpacing: 0,
     lineHeight: 1.5,
-    textAlign: 'left' as const,
-    textDecoration: 'none' as const,
-    fontStyle: 'normal' as const,
+    textAlign: "left" as const,
+    textDecoration: "none" as const,
+    fontStyle: "normal" as const,
     textShadow: {
       enabled: false,
       offsetX: 2,
       offsetY: 2,
       blur: 4,
-      color: 'rgba(0,0,0,0.5)',
+      color: "rgba(0,0,0,0.5)",
     },
   },
   selectedTexts: [],
@@ -380,7 +380,7 @@ export const editorSlice = createSlice({
         ...state.textDefaults,
         ...action.payload,
         id,
-        text: action.payload.text || 'Double click to edit',
+        text: action.payload.text || "Double click to edit",
         position: { x: 50, y: 50 },
         rotation: 0,
         zIndex: state.textElements.length,
@@ -388,8 +388,13 @@ export const editorSlice = createSlice({
       state.activeTextId = id;
     },
 
-    updateTextElement: (state, action: PayloadAction<{ id: string; updates: Partial<TextStyle> }>) => {
-      const index = state.textElements.findIndex(el => el.id === action.payload.id);
+    updateTextElement: (
+      state,
+      action: PayloadAction<{ id: string; updates: Partial<TextStyle> }>
+    ) => {
+      const index = state.textElements.findIndex(
+        (el) => el.id === action.payload.id
+      );
       if (index !== -1) {
         state.textElements[index] = {
           ...state.textElements[index],
@@ -403,35 +408,48 @@ export const editorSlice = createSlice({
     },
 
     deleteTextElement: (state, action: PayloadAction<string>) => {
-      state.textElements = state.textElements.filter(el => el.id !== action.payload);
+      state.textElements = state.textElements.filter(
+        (el) => el.id !== action.payload
+      );
       if (state.activeTextId === action.payload) {
         state.activeTextId = null;
       }
     },
 
-    updateTextPosition: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
-      const text = state.textElements.find(el => el.id === action.payload.id);
+    updateTextPosition: (
+      state,
+      action: PayloadAction<{ id: string; x: number; y: number }>
+    ) => {
+      const text = state.textElements.find((el) => el.id === action.payload.id);
       if (text) {
         text.position = { x: action.payload.x, y: action.payload.y };
       }
     },
 
-    updateTextRotation: (state, action: PayloadAction<{ id: string; rotation: number }>) => {
-      const text = state.textElements.find(el => el.id === action.payload.id);
+    updateTextRotation: (
+      state,
+      action: PayloadAction<{ id: string; rotation: number }>
+    ) => {
+      const text = state.textElements.find((el) => el.id === action.payload.id);
       if (text) {
         text.rotation = action.payload.rotation;
       }
     },
 
-    updateTextZIndex: (state, action: PayloadAction<{ id: string; zIndex: number }>) => {
-      const text = state.textElements.find(el => el.id === action.payload.id);
+    updateTextZIndex: (
+      state,
+      action: PayloadAction<{ id: string; zIndex: number }>
+    ) => {
+      const text = state.textElements.find((el) => el.id === action.payload.id);
       if (text) {
         text.zIndex = action.payload.zIndex;
       }
     },
 
     duplicateTextElement: (state, action: PayloadAction<string>) => {
-      const textToDuplicate = state.textElements.find(el => el.id === action.payload);
+      const textToDuplicate = state.textElements.find(
+        (el) => el.id === action.payload
+      );
       if (textToDuplicate) {
         const id = nanoid();
         state.textElements.push({
@@ -447,15 +465,24 @@ export const editorSlice = createSlice({
       }
     },
 
-    updateTextDefaults: (state, action: PayloadAction<Partial<EditorSlice["textDefaults"]>>) => {
+    updateTextDefaults: (
+      state,
+      action: PayloadAction<Partial<EditorSlice["textDefaults"]>>
+    ) => {
       state.textDefaults = {
         ...state.textDefaults,
         ...action.payload,
       };
     },
 
-    reorderTextElements: (state, action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>) => {
-      const [removed] = state.textElements.splice(action.payload.sourceIndex, 1);
+    reorderTextElements: (
+      state,
+      action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>
+    ) => {
+      const [removed] = state.textElements.splice(
+        action.payload.sourceIndex,
+        1
+      );
       state.textElements.splice(action.payload.destinationIndex, 0, removed);
       // Update zIndex after reordering
       state.textElements.forEach((text, index) => {
@@ -463,9 +490,12 @@ export const editorSlice = createSlice({
       });
     },
 
-    updateMultipleTextElements: (state, action: PayloadAction<{ ids: string[]; updates: Partial<TextStyle> }>) => {
-      action.payload.ids.forEach(id => {
-        const index = state.textElements.findIndex(el => el.id === id);
+    updateMultipleTextElements: (
+      state,
+      action: PayloadAction<{ ids: string[]; updates: Partial<TextStyle> }>
+    ) => {
+      action.payload.ids.forEach((id) => {
+        const index = state.textElements.findIndex((el) => el.id === id);
         if (index !== -1) {
           state.textElements[index] = {
             ...state.textElements[index],
