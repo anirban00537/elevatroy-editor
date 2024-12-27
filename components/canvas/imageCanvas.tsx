@@ -20,9 +20,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
   const image = useSelector((state: RootState) => state.editor.image);
   const { elements } = useSelector((state: RootState) => state.editor);
   const { shadowSettings } = useSelector((state: RootState) => state.editor);
-  const textElements = useSelector((state: RootState) => state.editor.textElements);
-  const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
-  const canvasTexts = useSelector((state: RootState) => state.editor.canvasTexts);
+  const textElements = useSelector(
+    (state: RootState) => state.editor.textElements
+  );
+  const selectedTexts = useSelector(
+    (state: RootState) => state.editor.selectedTexts
+  );
+  const canvasTexts = useSelector(
+    (state: RootState) => state.editor.canvasTexts
+  );
 
   const [isResizable, setIsResizable] = useState(false);
   const dispatch = useDispatch();
@@ -38,12 +44,21 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       const isInsideCanvas = canvasRef.current?.contains(event.target as Node);
-      const isControlElement = (event.target as Element)?.closest('.control-element');
-      const isTextControl = (event.target as Element)?.closest('[data-text-control]');
-      const isSidebar = (event.target as Element)?.closest('#sidebar');
-      
-      if (isInsideCanvas && !isControlElement && !isTextControl && 
-          !isSidebar && event.target === canvasRef.current) {
+      const isControlElement = (event.target as Element)?.closest(
+        ".control-element"
+      );
+      const isTextControl = (event.target as Element)?.closest(
+        "[data-text-control]"
+      );
+      const isSidebar = (event.target as Element)?.closest("#sidebar");
+
+      if (
+        isInsideCanvas &&
+        !isControlElement &&
+        !isTextControl &&
+        !isSidebar &&
+        event.target === canvasRef.current
+      ) {
         dispatch(setSelectedTexts([]));
         dispatch(setActiveText(null));
       }
@@ -56,18 +71,18 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
   }, [dispatch]);
 
   return (
-    <div 
+    <div
       ref={canvasRef}
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
     >
-      <div 
+      <div
         className={cn(
           "relative transform-gpu transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-[1.005]",
           shadowSettings.enabled ? "" : "hover:rotate-[0.5deg]"
         )}
         style={scaleStyle}
       >
-        <div 
+        <div
           ref={containerRef}
           className={cn(
             "my-node relative bg-dark-200/90 rounded-xl transition-all duration-300 backdrop-blur-xl",
@@ -76,9 +91,12 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
           style={nodeStyle}
         >
           {image ? (
-            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
+            <div
+              className="relative w-full h-full"
+              style={{ transformStyle: "preserve-3d" }}
+            >
               <ImageWithControls
-                src={typeof image === 'string' ? image : image.src}
+                src={typeof image === "string" ? image : image.src}
                 id={0}
                 handleRemove={handleRemove}
                 keepRatio={true}
@@ -94,12 +112,12 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
           )}
 
           {shadowSettings.enabled && (
-            <div 
+            <div
               className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent 
                 pointer-events-none opacity-50 rounded-xl"
               style={{
-                transform: 'translateZ(-1px)',
-                filter: 'blur(2px)',
+                transform: "translateZ(-1px)",
+                filter: "blur(2px)",
               }}
             />
           )}
@@ -133,7 +151,7 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ containerRef }) => {
                 textDecoration: textElement.textDecoration,
                 fontStyle: textElement.fontStyle,
                 width: textElement.width,
-                height: textElement.height
+                height: textElement.height,
               }}
             />
           ))}

@@ -16,7 +16,9 @@ interface DraggableTextProps {
 
 const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
   const dispatch = useDispatch();
-  const selectedTexts = useSelector((state: RootState) => state.editor.selectedTexts);
+  const selectedTexts = useSelector(
+    (state: RootState) => state.editor.selectedTexts
+  );
   const [isControlsVisible, setIsControlsVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: property.x, y: property.y });
@@ -25,12 +27,9 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
     height: property.height || 100,
   });
 
-  const handleDragStop: RndDragCallback = useCallback(
-    (e, d) => {
-      setPosition({ x: d.x, y: d.y });
-    },
-    []
-  );
+  const handleDragStop: RndDragCallback = useCallback((e, d) => {
+    setPosition({ x: d.x, y: d.y });
+  }, []);
 
   const handleResize: RndResizeCallback = useCallback(
     (e, direction, ref, delta, newPosition) => {
@@ -44,10 +43,12 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (e.shiftKey) {
       if (selectedTexts.includes(property.id)) {
-        dispatch(setSelectedTexts(selectedTexts.filter(id => id !== property.id)));
+        dispatch(
+          setSelectedTexts(selectedTexts.filter((id) => id !== property.id))
+        );
       } else {
         dispatch(setSelectedTexts([...selectedTexts, property.id]));
       }
@@ -55,7 +56,7 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
       dispatch(setActiveText(property.id));
       dispatch(setSelectedTexts([property.id]));
     }
-    
+
     setIsControlsVisible(true);
     dispatch(setActiveTab("draggableText"));
   };
@@ -63,7 +64,7 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
-        targetRef.current && 
+        targetRef.current &&
         !targetRef.current.contains(event.target as Node)
       ) {
         setIsControlsVisible(false);
@@ -79,7 +80,12 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
   }, [dispatch]);
 
   return (
-    <div onClick={handleClick} tabIndex={0} ref={targetRef}>
+    <div
+      onClick={handleClick}
+      tabIndex={0}
+      ref={targetRef}
+      className="absolute z-20"
+    >
       <Rnd
         position={position}
         size={dimensions}
@@ -100,6 +106,8 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
           border: "1px dashed transparent",
           borderColor: isControlsVisible ? "#00f" : "transparent",
           borderRadius: "4px",
+          zIndex: isControlsVisible ? 30 : 20,
+          position: "relative",
         }}
       >
         <textarea
@@ -117,95 +125,115 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
             fontFamily: "inherit",
             fontSize: "inherit",
             color: "inherit",
+            position: "relative",
+            zIndex: 1,
           }}
           value={property.text}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            dispatch(updateTextById({
-              id: property.id,
-              text: e.target.value,
-            }));
+            dispatch(
+              updateTextById({
+                id: property.id,
+                text: e.target.value,
+              })
+            );
           }}
           spellCheck={false}
         />
-        
+
         {isControlsVisible && (
           <>
-            <div style={{
-              position: "absolute",
-              top: "-5px",
-              left: "50%",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "ns-resize",
-              transform: "translate(-50%, -50%)",
-            }} />
-            <div style={{
-              position: "absolute",
-              right: "-5px",
-              top: "50%",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "ew-resize",
-              transform: "translate(50%, -50%)",
-            }} />
-            <div style={{
-              position: "absolute",
-              bottom: "-5px",
-              left: "50%",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "ns-resize",
-              transform: "translate(-50%, 50%)",
-            }} />
-            <div style={{
-              position: "absolute",
-              left: "-5px",
-              top: "50%",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "ew-resize",
-              transform: "translate(-50%, -50%)",
-            }} />
-            <div style={{
-              position: "absolute",
-              top: "-5px",
-              left: "-5px",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "nwse-resize",
-            }} />
-            <div style={{
-              position: "absolute",
-              top: "-5px",
-              right: "-5px",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "nesw-resize",
-            }} />
-            <div style={{
-              position: "absolute",
-              bottom: "-5px",
-              left: "-5px",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "nesw-resize",
-            }} />
-            <div style={{
-              position: "absolute",
-              bottom: "-5px",
-              right: "-5px",
-              width: "10px",
-              height: "10px",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "nwse-resize",
-            }} />
+            <div
+              style={{
+                position: "absolute",
+                top: "-5px",
+                left: "50%",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "ns-resize",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: "-5px",
+                top: "50%",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "ew-resize",
+                transform: "translate(50%, -50%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-5px",
+                left: "50%",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "ns-resize",
+                transform: "translate(-50%, 50%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                left: "-5px",
+                top: "50%",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "ew-resize",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "-5px",
+                left: "-5px",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "nwse-resize",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "-5px",
+                right: "-5px",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "nesw-resize",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-5px",
+                left: "-5px",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "nesw-resize",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-5px",
+                right: "-5px",
+                width: "10px",
+                height: "10px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                cursor: "nwse-resize",
+              }}
+            />
           </>
         )}
       </Rnd>
