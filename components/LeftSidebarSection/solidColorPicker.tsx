@@ -60,20 +60,6 @@ const SolidColorPicker = ({
           ))}
         </div>
       </div>
-
-      {/* Recently Used */}
-      <div>
-        <h4 className="text-xs text-zinc-400 mb-3">Recently Used</h4>
-        <div className="grid grid-cols-8 gap-2">
-          {[...Array(8)].map((_, index) => (
-            <div
-              key={index}
-              className="aspect-square rounded-lg bg-dark-300 border 
-                border-white/5"
-            />
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

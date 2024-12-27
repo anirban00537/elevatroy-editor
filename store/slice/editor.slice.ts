@@ -190,7 +190,7 @@ const initialState: EditorSlice = {
     color: "#000000",
     opacity: 0.3,
     inset: false,
-    enabled: true,
+    enabled: false,
   },
   textElements: [],
   activeTextId: null,

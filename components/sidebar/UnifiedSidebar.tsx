@@ -33,6 +33,7 @@ import ControlSection from "../sidebar/controlSection";
 import ShadowControls from "../controls/ShadowControls";
 import TextControls from "../controls/TextControls";
 import { event } from "@/lib/analytics";
+import AdjustmentControls from "../controls/AdjustmentControls";
 
 interface UnifiedSidebarProps {
   handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -123,7 +124,13 @@ const sections = [
     id: "adjustments",
     title: "Adjustments",
     icon: Sliders,
-    Component: ({ sliders }: any) => <div className="space-y-5">{sliders}</div>,
+    Component: () => <AdjustmentControls />,
+  },
+  {
+    id: "shadows",
+    title: "Shadows",
+    icon: Cloud,
+    Component: () => <ShadowControls />,
   },
   {
     id: "background",
@@ -146,12 +153,6 @@ const sections = [
     Component: ({ canvasInputs }: any) => (
       <div className="space-y-3">{canvasInputs}</div>
     ),
-  },
-  {
-    id: "shadows",
-    title: "Shadows",
-    icon: Cloud,
-    Component: () => <ShadowControls />,
   },
   {
     id: "text",
