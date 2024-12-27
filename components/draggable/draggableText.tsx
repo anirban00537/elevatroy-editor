@@ -63,13 +63,26 @@ const DraggableText: React.FC<DraggableTextProps> = memo(({ property }) => {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        targetRef.current &&
-        !targetRef.current.contains(event.target as Node)
-      ) {
+      // Check if click is inside text management, sidebar, or the text itself
+      const isTextManagement = (event.target as Element)?.closest(
+        "#text-management"
+      );
+      const isSidebar = (event.target as Element)?.closest("#sidebar");
+      const isInsideText = targetRef.current?.contains(event.target as Node);
+      const isTextControl = (event.target as Element)?.closest(
+        "[data-text-control]"
+      );
+
+      // Only deselect if click is outside all relevant areas
+      if (!isTextManagement && !isSidebar && !isInsideText && !isTextControl) {
         setIsControlsVisible(false);
         dispatch(setSelectedTexts([]));
         dispatch(setActiveText(null));
+      }
+
+      // Keep controls visible if clicking inside text or controls
+      if (isInsideText || isTextManagement || isTextControl) {
+        setIsControlsVisible(true);
       }
     };
 

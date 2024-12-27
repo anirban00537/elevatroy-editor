@@ -179,38 +179,52 @@ const TextControls = () => {
   };
 
   const handleIncreaseFontSize = () => {
-    const textsToUpdate = selectedTexts.length > 0 ? selectedTexts : (activeTextId ? [activeTextId] : []);
-    console.log('Texts to update:', textsToUpdate);
-    
+    const textsToUpdate =
+      selectedTexts.length > 0
+        ? selectedTexts
+        : activeTextId
+        ? [activeTextId]
+        : [];
+    console.log("Texts to update:", textsToUpdate);
+
     // Get current text's font size
-    const currentText = textElements.find(t => t.id === textsToUpdate[0]);
+    const currentText = textElements.find((t) => t.id === textsToUpdate[0]);
     const currentSize = currentText?.fontSize || 16;
     const newSize = Math.min(currentSize + 4, 200);
-    
+
     // Update all selected texts with the new size
-    textsToUpdate.forEach(id => {
-      dispatch(updateTextElement({
-        id,
-        updates: { fontSize: newSize }
-      }));
+    textsToUpdate.forEach((id) => {
+      dispatch(
+        updateTextElement({
+          id,
+          updates: { fontSize: newSize },
+        })
+      );
     });
   };
 
   const handleDecreaseFontSize = () => {
-    const textsToUpdate = selectedTexts.length > 0 ? selectedTexts : (activeTextId ? [activeTextId] : []);
-    console.log('Texts to update:', textsToUpdate);
-    
+    const textsToUpdate =
+      selectedTexts.length > 0
+        ? selectedTexts
+        : activeTextId
+        ? [activeTextId]
+        : [];
+    console.log("Texts to update:", textsToUpdate);
+
     // Get current text's font size
-    const currentText = textElements.find(t => t.id === textsToUpdate[0]);
+    const currentText = textElements.find((t) => t.id === textsToUpdate[0]);
     const currentSize = currentText?.fontSize || 16;
     const newSize = Math.max(currentSize - 4, 8);
-    
+
     // Update all selected texts with the new size
-    textsToUpdate.forEach(id => {
-      dispatch(updateTextElement({
-        id,
-        updates: { fontSize: newSize }
-      }));
+    textsToUpdate.forEach((id) => {
+      dispatch(
+        updateTextElement({
+          id,
+          updates: { fontSize: newSize },
+        })
+      );
     });
   };
 
