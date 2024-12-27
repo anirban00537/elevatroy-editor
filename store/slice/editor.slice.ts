@@ -160,7 +160,7 @@ const initialState: EditorSlice = {
     status: false,
     direction: "column",
     titleProperties: {
-      value: "Moiful.com: Elevate Your Screenshots",
+      value: "Lunar.com: Elevate Your Screenshots",
       fontSize: 80,
       color: "#fff",
       fontWeight: "normal",
@@ -170,7 +170,7 @@ const initialState: EditorSlice = {
     },
     descriptionProperties: {
       value:
-        "Transform ordinary screenshots into captivating masterpieces with Moiful.com. Unlock a world of possibilities and effortlessly enhance your visual content. Start creating stunning images today!",
+        "Transform ordinary screenshots into captivating masterpieces with lunar.elevatroy.com. Unlock a world of possibilities and effortlessly enhance your visual content. Start creating stunning images today!",
       fontSize: 40,
       color: "#fff",
       fontWeight: "normal",

@@ -12,10 +12,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Shots - Beautiful Screenshot Editor by Elevatroy",
+  title: "Lunar - Beautiful Screenshot Editor by Elevatroy",
   description:
-    "Transform your screenshots into stunning visuals with Shots, a free tool by Elevatroy - Your trusted SaaS & Web Development agency. Create professional-looking screenshots for your documentation, presentations, or social media posts.",
-  applicationName: "Shots by Elevatroy",
+    "Transform your screenshots into stunning visuals with Lunar, a free tool by Elevatroy - Your trusted SaaS & Web Development agency. Create professional-looking screenshots for your documentation, presentations, or social media posts.",
+  applicationName: "Lunar by Elevatroy",
   keywords: [
     // Product Keywords
     "screenshot editor",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://shots.elevatroy.com",
-    siteName: "Shots by Elevatroy",
-    title: "Shots - Beautiful Screenshot Editor by Elevatroy",
+    url: "https://lunar.elevatroy.com",
+    siteName: "Lunar by Elevatroy",
+    title: "Lunar - Beautiful Screenshot Editor by Elevatroy",
     description:
       "Free screenshot beautifier tool by Elevatroy, your trusted SaaS & Web Development partner. Transform your screenshots into professional visuals.",
     images: [
@@ -64,13 +64,13 @@ export const metadata: Metadata = {
         url: "/og-image.png", // Add your OG image
         width: 1200,
         height: 630,
-        alt: "Shots by Elevatroy Screenshot Editor",
+        alt: "Lunar by Elevatroy Screenshot Editor",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shots - Beautiful Screenshot Editor by Elevatroy",
+    title: "Lunar - Beautiful Screenshot Editor by Elevatroy",
     description:
       "Transform your screenshots into stunning visuals with our free tool. By Elevatroy - Your SaaS & Web Development experts.",
     images: ["/twitter-image.png"], // Add your Twitter card image

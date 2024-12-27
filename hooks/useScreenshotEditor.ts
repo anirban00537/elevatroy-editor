@@ -94,7 +94,7 @@ export const useExport = () => {
       toPng(containerRef.current, { cacheBust: true })
         .then((dataUrl: any) => {
           const link = document.createElement("a");
-          link.download = `Moiful-${new Date().getTime()}.png`;
+          link.download = `Lunar-${new Date().getTime()}.png`;
           link.href = dataUrl;
 
           // Set image dimensions for high quality export

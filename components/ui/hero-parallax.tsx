@@ -134,7 +134,7 @@ export const ProductCard = ({
           height="600"
           width="600"
           className="object-contain  absolute h-full  inset-0"
-          alt={"Moiful"}
+          alt={"Lunar"}
         />
       </Link>
     </motion.div>
