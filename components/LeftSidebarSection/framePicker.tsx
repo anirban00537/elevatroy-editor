@@ -16,22 +16,7 @@ const FramePicker = () => {
       icon: <CircleSlash size={20} />,
       preview: null,
     },
-    {
-      id: FramesID.GLASS_FRAME,
-      title: "Glass Frame",
-      icon: <Frame size={20} />,
-      preview: (
-        <div className="border-[1px] border-white/20 rounded-xl w-full h-full bg-white/5 backdrop-blur-sm" />
-      ),
-    },
-    {
-      id: FramesID.DARK_GLASS_FRAME,
-      title: "Glass Frame Dark",
-      icon: <Frame size={20} />,
-      preview: (
-        <div className="border-[1px] border-black/20 rounded-xl w-full h-full bg-black/20 backdrop-blur-sm" />
-      ),
-    },
+
     {
       id: FramesID.MAC_FRAME,
       title: "Mac Window",
@@ -97,16 +82,6 @@ const FramePicker = () => {
               ×
             </div>
           </div>
-        </div>
-      ),
-    },
-    {
-      id: FramesID.FANCY_FRAME,
-      title: "Fancy Frame",
-      icon: <Frame size={20} />,
-      preview: (
-        <div className="rounded-xl w-full h-full p-[1px] bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500">
-          <div className="w-full h-full rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm" />
         </div>
       ),
     },
