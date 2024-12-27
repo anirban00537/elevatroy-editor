@@ -9,24 +9,7 @@ interface ImagePickerProps {
 const ImagePicker = ({ handleBackgroundImage }: ImagePickerProps) => {
   return (
     <div className="space-y-6">
-      {/* Upload Section */}
-      <div>
-        <h4 className="text-xs text-zinc-400 mb-3">Upload Image</h4>
-        <button
-          className="w-full px-4 py-3 bg-dark-300 hover:bg-dark-400 
-            rounded-lg border border-white/10 transition-colors group"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <Upload 
-              size={20} 
-              className="text-zinc-400 group-hover:text-zinc-300" 
-            />
-            <span className="text-xs text-zinc-400 group-hover:text-zinc-300">
-              Click to upload or drag and drop
-            </span>
-          </div>
-        </button>
-      </div>
+ 
 
       {/* Image Presets */}
       <div>
